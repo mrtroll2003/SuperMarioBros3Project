@@ -48,7 +48,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = 0;
 	}
-
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))

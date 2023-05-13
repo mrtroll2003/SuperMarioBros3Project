@@ -1,5 +1,5 @@
 #include "Goomba.h"
-#include "Coin.h"
+#include "Brick.h"
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
 	this->ax = 0;
@@ -34,12 +34,8 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CCoin*>(e->obj))
-	{
-		e->obj->Delete();
-	}
+	
 	if (!e->obj->IsBlocking()) return;
-		
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	
 	if (e->ny != 0 )

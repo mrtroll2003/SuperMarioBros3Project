@@ -42,10 +42,10 @@
 #include "AssetIDs.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"04 - Collision"
+#define MAIN_WINDOW_TITLE L"FinalProject"
 #define WINDOW_ICON_PATH L"mario.ico"
 
-#define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(146.0f/255, 237.0f/255, 235.0f/255, 0.0f)
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
@@ -321,6 +321,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 3, 335, 134, 335 + 15, 134 + 15, texMisc);
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 4, 353, 134, 353 + 15, 134 + 15, texMisc);
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
+
+	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BRICK + 1);
@@ -334,6 +336,10 @@ void LoadAssetsBrick()
 	ani->Add(ID_SPRITE_GOLD_BRICK + 4);
 	ani->Add(ID_SPRITE_GOLD_BRICK + 5);
 	animations->Add(ID_ANI_GOLD_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_INVI_BRICK + 1);
+	animations->Add(ID_ANI_INVI_BRICK, ani);
 }
 void LoadAssetsCoin()
 {
@@ -379,7 +385,7 @@ void LoadResources()
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
-	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
+	//textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
@@ -430,10 +436,10 @@ void Reload()
 		objects.push_back(gb);
 	}
 
-	// Vertical column 1
+	// World boundaries for Mario
 	for (int i = 0; i < 10; i++)
 	{
-		CBrick* b = new CBrick(0, BRICK_Y - i * BRICK_WIDTH);
+		CInviBrick* b = new CInviBrick(0, BRICK_Y - i * BRICK_WIDTH);
 		objects.push_back(b);
 	}
 

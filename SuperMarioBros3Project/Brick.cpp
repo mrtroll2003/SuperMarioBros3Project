@@ -18,3 +18,8 @@ void CGoldBrick::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_GOLD_BRICK)->Render(x, y);
 }
+void CInviBrick::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_INVI_BRICK)->Render(x, y);
+}

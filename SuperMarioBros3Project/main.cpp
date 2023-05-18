@@ -36,6 +36,7 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "Environment.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -77,7 +78,23 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
+void LoadAssetsEnvironment()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
 
+	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
+
+	sprites->Add(ID_SPRITE_WSB, 1, 78, 1 + 131, 78 + 67, texEnvi);
+
+	LPANIMATION ani;
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_WSB);
+	animations->Add(ID_ANI_WSB, ani);
+
+}
 void LoadAssetsMario()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -396,6 +413,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
 	//textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 
+	LoadAssetsEnvironment();
 	LoadAssetsMario();
 	LoadAssetsGoomba();
 	LoadAssetsBrick();
@@ -430,7 +448,9 @@ void ClearScene()
 void Reload()
 {
 	ClearScene();
-
+	//Environment background
+	CWideSquaredBush* b = new CWideSquaredBush(68.5f, BRICK_Y - 20.0f);
+	objects.push_back(b);
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{

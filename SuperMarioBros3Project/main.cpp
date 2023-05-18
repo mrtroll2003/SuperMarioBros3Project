@@ -55,6 +55,7 @@
 #define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario_transparent.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc_transparent.png"
 #define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies_transparent.png"
+#define TEXTURE_PATH_ENVIRONMENT TEXTURES_DIR "\\environment_transparent.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
 CGame *game;
@@ -314,6 +315,7 @@ void LoadAssetsBrick()
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
+	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
 	sprites->Add(ID_SPRITE_BRICK + 1, 372, 153, 372 + 15, 153 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 1, 299, 134, 299 + 15, 134 + 15, texMisc);
@@ -323,6 +325,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
+
+	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 49, 7 + 15, texEnvi);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BRICK + 1);
@@ -340,6 +344,10 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_INVI_BRICK + 1);
 	animations->Add(ID_ANI_INVI_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_BASE_BRICK + 1);
+	animations->Add(ID_ANI_BASE_BRICK, ani);
 }
 void LoadAssetsCoin()
 {
@@ -385,6 +393,7 @@ void LoadResources()
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
+	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
 	//textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 
 	LoadAssetsMario();
@@ -425,7 +434,7 @@ void Reload()
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
+		CBaseBrick* b = new CBaseBrick(i * BRICK_WIDTH * 3.0f, BRICK_Y+10.0f);
 		objects.push_back(b);
 	}
 

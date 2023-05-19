@@ -88,12 +88,23 @@ void LoadAssetsEnvironment()
 
 	sprites->Add(ID_SPRITE_WSB, 1, 78, 1 + 131, 78 + 67, texEnvi);
 
+	sprites->Add(ID_SPRITE_DCLOUD, 74, 1, 74 + 51, 1 + 24, texEnvi);
+
+	sprites->Add(ID_SPRITE_BUSH, 54, 6, 54 + 17, 6 + 17, texEnvi);
+
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_WSB);
 	animations->Add(ID_ANI_WSB, ani);
 
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_DCLOUD);
+	animations->Add(ID_ANI_DCLOUD, ani);
+	
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_BUSH);
+	animations->Add(ID_ANI_BUSH, ani);
 }
 void LoadAssetsMario()
 {
@@ -451,6 +462,13 @@ void Reload()
 	//Environment background
 	CWideSquaredBush* b = new CWideSquaredBush(68.5f, BRICK_Y - 20.0f);
 	objects.push_back(b);
+	CDoubleCloud* c = new CDoubleCloud(152.5f, 50.0f);
+	objects.push_back(c);
+	for (int i = 1; i < 4; i++)
+	{
+		CSingleBush* sb = new CSingleBush(150.0f + i * 18.0f, BRICK_Y -6.0f);
+		objects.push_back(sb);
+	}
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{

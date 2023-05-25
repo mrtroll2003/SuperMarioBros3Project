@@ -33,4 +33,9 @@ public:
 	CSingleBush(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };
-
+class CDColorPlat : public CEnvironment
+{
+public: 
+	CDColorPlat(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};

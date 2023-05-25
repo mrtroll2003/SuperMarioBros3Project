@@ -86,25 +86,31 @@ void LoadAssetsEnvironment()
 
 	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
 
-	sprites->Add(ID_SPRITE_WSB, 1, 78, 1 + 131, 78 + 67, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 1, 1, 78, 1 + 131, 78 + 67, texEnvi);
 
-	sprites->Add(ID_SPRITE_DCLOUD, 74, 1, 74 + 51, 1 + 24, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 2, 74, 1, 74 + 51, 1 + 24, texEnvi);
 
-	sprites->Add(ID_SPRITE_BUSH, 54, 6, 54 + 17, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 3, 54, 6, 54 + 17, 6 + 17, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 4, 135, 69, 224, 150, texEnvi);
 
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_WSB);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 1);
 	animations->Add(ID_ANI_WSB, ani);
 
 	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_DCLOUD);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 2);
 	animations->Add(ID_ANI_DCLOUD, ani);
 	
 	ani = new CAnimation(100);
-	ani->Add(ID_SPRITE_BUSH);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 3);
 	animations->Add(ID_ANI_BUSH, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 4);
+	animations->Add(ID_ANI_ENVIRONMENT+400, ani);
 }
 void LoadAssetsMario()
 {
@@ -469,18 +475,23 @@ void Reload()
 		CSingleBush* sb = new CSingleBush(150.0f + i * 18.0f, BRICK_Y -6.0f);
 		objects.push_back(sb);
 	}
+	CDColorPlat* d = new CDColorPlat(300.0f, BRICK_Y -38.0f);
+	objects.push_back(d);
+	for (int i = 0; i <3; i++)
+	{
+		CInviBrick* b = new CInviBrick(268.1f + i * BRICK_WIDTH, BRICK_Y - 37.5f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CInviBrick* b = new CInviBrick(298.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
+		objects.push_back(b);
+	}
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
 		CBaseBrick* b = new CBaseBrick(i * BRICK_WIDTH * 3.0f, BRICK_Y+10.0f);
 		objects.push_back(b);
-	}
-
-	// Short, low platform
-	for (int i = 1; i < 3; i++)
-	{
-		CGoldBrick* gb = new CGoldBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y - 44.0f);
-		objects.push_back(gb);
 	}
 
 	// World boundaries for Mario

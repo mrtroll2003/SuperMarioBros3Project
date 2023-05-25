@@ -19,3 +19,8 @@ void CSingleBush::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_BUSH)->Render(x, y);
 }
+void CDColorPlat::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_ENVIRONMENT + 400)->Render(x, y);
+}

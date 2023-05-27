@@ -359,6 +359,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
+	//for debugging
+	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 49, 7 + 15, texEnvi);
 	LPANIMATION ani;
@@ -479,12 +481,12 @@ void Reload()
 	objects.push_back(d);
 	for (int i = 0; i <3; i++)
 	{
-		CInviBrick* b = new CInviBrick(268.1f + i * BRICK_WIDTH, BRICK_Y - 37.5f);
+		CInviBrick* b = new CInviBrick(264.9f + i * BRICK_WIDTH, BRICK_Y - 37.5f);
 		objects.push_back(b);
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		CInviBrick* b = new CInviBrick(298.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
+		CInviBrick* b = new CInviBrick(296.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
 		objects.push_back(b);
 	}
 	// Main ground
@@ -503,12 +505,6 @@ void Reload()
 
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
-
-	for (int j = 0; j < 4; j++)
-	{
-		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
-		objects.push_back(goomba);
-	}
 
 	// COINS 
 	for (int i = 0; i < 10; i++)

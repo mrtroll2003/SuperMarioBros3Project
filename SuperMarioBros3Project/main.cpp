@@ -94,6 +94,9 @@ void LoadAssetsEnvironment()
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 4, 135, 69, 224, 150, texEnvi);
 
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 5, 234, 37, 234 + 217, 37 + 113, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 6, 129, 1, 129 + 33, 25, texEnvi);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -111,6 +114,14 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 4);
 	animations->Add(ID_ANI_ENVIRONMENT+400, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 5);
+	animations->Add(ID_ANI_QUAD_PLAT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 6);
+	animations->Add(ID_ANI_SCLOUD, ani);
 }
 void LoadAssetsMario()
 {
@@ -359,6 +370,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
+
+	sprites->Add(ID_SPRITE_PIPE + 1, 4, 27, 37, 76, texEnvi);
 	//for debugging
 	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
 
@@ -384,6 +397,10 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BASE_BRICK + 1);
 	animations->Add(ID_ANI_BASE_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_PIPE + 1);
+	animations->Add(ID_ANI_PIPE, ani);
 }
 void LoadAssetsCoin()
 {
@@ -458,7 +475,7 @@ void ClearScene()
 #define COIN_X 100.0f
 
 #define BRICK_Y GROUND_Y + 20.0f
-#define NUM_BRICKS 70
+#define NUM_BRICKS 15
 
 /*
 * Reload all objects of current scene 
@@ -489,6 +506,12 @@ void Reload()
 		CInviBrick* b = new CInviBrick(296.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
 		objects.push_back(b);
 	}
+	CPipe* p = new CPipe(400.0f, BRICK_Y - 21.0f);
+	objects.push_back(p);
+	CSingleCloud* sc1 = new CSingleCloud(350.0f, 50.0f);
+	objects.push_back(sc1);
+	CQuadPlat* qp1 = new CQuadPlat(550.0f, BRICK_Y - 53.0f);
+	objects.push_back(qp1);
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{

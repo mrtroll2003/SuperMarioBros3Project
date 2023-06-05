@@ -34,6 +34,7 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Koopa.h"
 #include "Coin.h"
 #include "Platform.h"
 #include "Environment.h"

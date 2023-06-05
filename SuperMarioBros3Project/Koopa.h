@@ -1,0 +1,24 @@
+#pragma once
+#include "GameObject.h"
+
+#define KOOPA_GRAVITY 0.002f
+#define KOOPA_WALKING_SPEED 0.05f
+
+
+#define KOOPA_BBOX_WIDTH 16
+#define KOOPA_BBOX_HEIGHT 14
+#define KOOPA_BBOX_HEIGHT_DIE 7
+
+#define KOOPA_DIE_TIMEOUT 500
+
+#define KOOPA_STATE_WALKING 100
+#define KOOPA_STATE_DIE 200
+
+#define ID_ANI_KOOPA_WALKING 6000
+#define ID_ANI_KOOPA_SHELL 6001
+#define ID_ANI_KOOPA_SHAKING 6002
+#define ID_ANI_KOOPA_SPINNING 6003
+class Koopa
+{
+};
+

@@ -17,10 +17,25 @@ void CGoldBrick::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_GOLD_BRICK)->Render(x, y);
 }
+void CQuestionBrick::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_QUESTION_BRICK)->Render(x, y);
+}
 void CInviBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_INVI_BRICK)->Render(x, y);
+}
+int CInviBrick::IsDirectionColliable(float nx, float ny)
+{
+	if ((nx == 0 && ny == -1) || (nx == 1 && ny == 0))return 1;
+	else return 0;
+}
+int CInviBase::IsDirectionColliable(float nx, float ny)
+{
+	if ((nx == 0 && ny == -1))return 1;
+	else return 0;
 }
 void CBaseBrick::Render()
 {

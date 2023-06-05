@@ -375,6 +375,11 @@ void LoadAssetsBrick()
 	//for debugging
 	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
 
+	sprites->Add(ID_SPRITE_QUESTION_BRICK + 1, 300, 117, 300 + 15, 117 + 15, texMisc);
+	sprites->Add(ID_SPRITE_QUESTION_BRICK + 2, 318, 117, 318 + 15, 117 + 15, texMisc);
+	sprites->Add(ID_SPRITE_QUESTION_BRICK + 3, 336, 117, 336 + 15, 117 + 15, texMisc);
+	sprites->Add(ID_SPRITE_QUESTION_BRICK + 4, 354, 117, 354 + 15, 117 + 15, texMisc);
+
 	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 49, 7 + 15, texEnvi);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -401,6 +406,13 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_PIPE + 1);
 	animations->Add(ID_ANI_PIPE, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_QUESTION_BRICK + 1, 1000);
+	ani->Add(ID_SPRITE_QUESTION_BRICK + 2);
+	ani->Add(ID_SPRITE_QUESTION_BRICK + 3);
+	ani->Add(ID_SPRITE_QUESTION_BRICK + 4);
+	animations->Add(ID_ANI_QUESTION_BRICK, ani);
 }
 void LoadAssetsCoin()
 {
@@ -498,20 +510,41 @@ void Reload()
 	objects.push_back(d);
 	for (int i = 0; i <3; i++)
 	{
-		CInviBrick* b = new CInviBrick(264.9f + i * BRICK_WIDTH, BRICK_Y - 37.5f);
+		CInviBase* b = new CInviBase(264.9f + i * BRICK_WIDTH, BRICK_Y - 37.5f);
 		objects.push_back(b);
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		CInviBrick* b = new CInviBrick(296.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
+		CInviBase* b = new CInviBase(296.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
 		objects.push_back(b);
 	}
 	CPipe* p = new CPipe(400.0f, BRICK_Y - 21.0f);
 	objects.push_back(p);
 	CSingleCloud* sc1 = new CSingleCloud(350.0f, 50.0f);
 	objects.push_back(sc1);
+	//2nd color plat
 	CQuadPlat* qp1 = new CQuadPlat(550.0f, BRICK_Y - 53.0f);
 	objects.push_back(qp1);
+	for (int i = 0; i < 5; i++)
+	{
+		CInviBase* b = new CInviBase((550.0f - 96.0f) + i * (BRICK_WIDTH-1), BRICK_Y - 36.5f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CInviBase* b = new CInviBase((550.0f - 36.0f) + i * BRICK_WIDTH, BRICK_Y - 69.5f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CInviBase* b = new CInviBase((550.0f + 15.0f) + i * (BRICK_WIDTH-1), BRICK_Y - 101.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		CInviBase* b = new CInviBase((550.0f + 15.5f) + i * (BRICK_WIDTH - 1), BRICK_Y - 20.5f);
+		objects.push_back(b);
+	}
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
@@ -534,6 +567,12 @@ void Reload()
 	{
 		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
 		objects.push_back(c);
+	}
+	// Question block
+	for (int i = 0; i < 2; i++)
+	{
+		CQuestionBrick* qb = new CQuestionBrick(186.0f + i * 16.0f, BRICK_Y - 53.0f, 1);
+		objects.push_back(qb);
 	}
 }
 

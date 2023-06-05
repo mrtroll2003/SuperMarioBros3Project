@@ -9,6 +9,7 @@
 #define ID_ANI_INVI_BRICK 10200
 #define ID_ANI_BASE_BRICK 10300
 #define ID_ANI_PIPE 10400
+#define ID_ANI_QUESTION_BRICK 10500
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
@@ -26,12 +27,25 @@ public:
 	void Render();
 	void Update(DWORD dt) {}
 };
+class CQuestionBrick : public CBrick {
+	int quesID;
+public:
+	int GetQuesID() { return quesID; }
+	CQuestionBrick(float x, float y, int id) : CBrick(x, y) { quesID = id; };
+	void Render();
+	void Update(DWORD dt) {}
+};
 class CInviBrick : public CBrick {
 public:
 	CInviBrick(float x, float y) :CBrick(x, y) {}
 	void Render();
 	void Update(DWORD dt) {}
-	
+	int IsDirectionColliable(float nx, float ny);
+};
+class CInviBase : public CInviBrick {
+public:
+	CInviBase(float x, float y) :CInviBrick(x, y) {}
+	int IsDirectionColliable(float nx, float ny);
 };
 class CBaseBrick : public CBrick {
 public:
@@ -48,3 +62,4 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
+

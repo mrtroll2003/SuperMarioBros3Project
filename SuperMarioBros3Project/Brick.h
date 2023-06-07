@@ -10,6 +10,7 @@
 #define ID_ANI_BASE_BRICK 10300
 #define ID_ANI_PIPE 10400
 #define ID_ANI_QUESTION_BRICK 10500
+#define ID_ANI_NULL_BRICK 10600
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
@@ -34,6 +35,13 @@ public:
 	CQuestionBrick(float x, float y, int id) : CBrick(x, y) { quesID = id; };
 	void Render();
 	void Update(DWORD dt) {}
+};
+class CNullBrick : public CBrick {
+public:
+	CNullBrick(float x, float y) : CBrick(x,y) {}
+	void Render();
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
 class CInviBrick : public CBrick {
 public:

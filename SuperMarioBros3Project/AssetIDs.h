@@ -74,6 +74,7 @@
 #define ID_SPRITE_BASE_BRICK 20300
 #define ID_SPRITE_PIPE 20400
 #define ID_SPRITE_QUESTION_BRICK 20500
+#define ID_SPRITE_NULL_BRICK 20600
 
 //define for question block's item id
 #define ID_ITEM_COIN 1

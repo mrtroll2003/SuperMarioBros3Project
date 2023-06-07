@@ -381,6 +381,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 3, 336, 117, 336 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 4, 354, 117, 354 + 15, 117 + 15, texMisc);
 
+	sprites->Add(ID_SPRITE_NULL_BRICK + 1, 205, 7, 205 + 15, 7 + 15, texEnvi);
+
 	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 49, 7 + 15, texEnvi);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
@@ -414,6 +416,10 @@ void LoadAssetsBrick()
 	ani->Add(ID_SPRITE_QUESTION_BRICK + 3);
 	ani->Add(ID_SPRITE_QUESTION_BRICK + 4);
 	animations->Add(ID_ANI_QUESTION_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_NULL_BRICK + 1);
+	animations->Add(ID_ANI_NULL_BRICK, ani);
 }
 void LoadAssetsCoin()
 {
@@ -572,9 +578,18 @@ void Reload()
 	// Question block
 	for (int i = 0; i < 2; i++)
 	{
+		CNullBrick* nb = new CNullBrick(186.0f + i * 16.0f, BRICK_Y - 53.0f);
+		objects.push_back(nb);
 		CQuestionBrick* qb = new CQuestionBrick(186.0f + i * 16.0f, BRICK_Y - 53.0f, ID_ITEM_COIN);
 		objects.push_back(qb);
 	}
+	//put null brick under question brick, delete the qb on impact and reveal the nb
+	CNullBrick* nb1 = new CNullBrick(246.0f, BRICK_Y - 99.0f);
+	objects.push_back(nb1);
+	CNullBrick* nb2 = new CNullBrick(262.0f, BRICK_Y - 99.0f);
+	objects.push_back(nb2);
+	CNullBrick* nb3 = new CNullBrick((550.0f - 96.0f + 16.0f), BRICK_Y - (69.5f + 16.0f));
+	objects.push_back(nb3);
 	CQuestionBrick* qb1 = new CQuestionBrick(246.0f, BRICK_Y - 99.0f, ID_ITEM_COIN);
 	objects.push_back(qb1);
 	CQuestionBrick* qb2 = new CQuestionBrick(262.0f, BRICK_Y - 99.0f, ID_ITEM_MUSHROOM);

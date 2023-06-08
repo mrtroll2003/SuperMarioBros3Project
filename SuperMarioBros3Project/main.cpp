@@ -354,6 +354,44 @@ void LoadAssetsGoomba()
 	animations->Add(ID_ANI_GOOMBA_DIE, ani);
 
 }
+void LoadAssetsKoopa()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+
+	sprites->Add(ID_SPRITE_KOOPA_WALKING + 1, 5, 129, 5 + 17, 129 + 27, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_WALKING + 2, 27, 129, 27 + 17, 129 + 27, texEnemy);
+
+	sprites->Add(ID_SPRITE_KOOPA_SHELL + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
+
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 2, 49, 138, 49 + 17, 138 + 17, texEnemy);
+
+	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 2, 49, 138, 49 + 17, 138 + 17, texEnemy);
+
+	LPANIMATION ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_WALKING + 1);
+	ani->Add(ID_SPRITE_KOOPA_WALKING + 2);
+	animations->Add(ID_ANI_KOOPA_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_SHELL + 1);
+	animations->Add(ID_ANI_KOOPA_SHELL, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_SHAKING + 1);
+	ani->Add(ID_SPRITE_KOOPA_SHAKING + 2);
+	animations->Add(ID_ANI_KOOPA_SHAKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_SPINNING + 1);
+	ani->Add(ID_SPRITE_KOOPA_SPINNING + 2);
+	animations->Add(ID_ANI_KOOPA_SPINNING, ani);
+}
 void LoadAssetsBrick()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -471,6 +509,7 @@ void LoadResources()
 	LoadAssetsEnvironment();
 	LoadAssetsMario();
 	LoadAssetsGoomba();
+	LoadAssetsKoopa();
 	LoadAssetsBrick();
 	LoadAssetsCoin();
 	LoadAssetsOther();
@@ -596,6 +635,11 @@ void Reload()
 	objects.push_back(qb2);
 	CQuestionBrick* qb3 = new CQuestionBrick((550.0f - 96.0f + 16.0f), BRICK_Y - (69.5f+16.0f), ID_ITEM_COIN);
 	objects.push_back(qb3);
+
+	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);
+	objects.push_back(goomba);
+	CKoopa* koopa = new CKoopa(150.0f, 40.0f);
+	objects.push_back(koopa);
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }

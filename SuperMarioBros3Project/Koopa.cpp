@@ -1,10 +1,14 @@
+#include <algorithm>
+#include "debug.h"
+
+
 #include "Koopa.h"
 #include "Brick.h"
 CKoopa::CKoopa(float x, float y) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
-	die_start = -1;
+	shell_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -48,7 +52,18 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
+	/*
+	if ((state == KOOPA_STATE_SHELL) && (GetTickCount64() - shell_start > KOOPA_SHELL_TIMEOUT))
+	{
+		SetState(KOOPA_STATE_SHAKING);
+		shell_start = GetTickCount64();
+	}
+	if ((state == KOOPA_STATE_SHAKING) && (GetTickCount64() - shell_start > KOOPA_SHELL_TIMEOUT))
+	{
+		SetState(KOOPA_STATE_WALKING);
+		shell_start = GetTickCount64();
+	}*/
+	
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -59,11 +74,11 @@ void CKoopa::Render()
 	{
 		aniId = ID_ANI_KOOPA_SHELL;
 	}
-	else if (state = KOOPA_STATE_SHAKING)
+	if (state = KOOPA_STATE_SHAKING)
 	{
 		aniId = ID_ANI_KOOPA_SHAKING;
 	}
-	else if (state = KOOPA_STATE_SPINNING)
+	if (state = KOOPA_STATE_SPINNING)
 	{
 		aniId = ID_ANI_KOOPA_SPINNING;
 	}
@@ -78,16 +93,25 @@ void CKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
+		DebugOut(L"Walking");
 		break;
 	case KOOPA_STATE_SPINNING:
-		vx = -KOOPA_SPINNING_SPEED;
+		vx = KOOPA_SPINNING_SPEED;
+		DebugOut(L"Spinning");
 		break;
-	default:
+	case KOOPA_STATE_SHELL:
 		shell_start = GetTickCount64();
 		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_SHELL) / 2;
 		vx = 0;
 		vy = 0;
-		ay = 0;
+		DebugOut(L"Shell");
+		break;
+	case KOOPA_STATE_SHAKING:
+		shell_start = GetTickCount64();
+		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_SHELL) / 2;
+		vx = 0;
+		vy = 0;
+		DebugOut(L"Shaking");
 		break;
 	}
 }

@@ -7,6 +7,7 @@
 #include "Game.h"
 
 #include "Goomba.h"
+#include "Koopa.h"
 #include "Coin.h"
 
 #include "Collision.h"
@@ -52,8 +53,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
-	else if (dynamic_cast<CGoldBrick*>(e->obj))
-		OnCollisionWithGoldBrick(e);
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+		OnCollisionWithQuestionBrick(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -89,13 +92,63 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		}
 	}
 }
-
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+	if (e->ny < 0)
+	{
+		switch (koopa->GetState())
+		{
+			case KOOPA_STATE_WALKING: 
+				koopa->SetState(KOOPA_STATE_SHELL);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+				break;
+			case KOOPA_STATE_SPINNING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+				break;
+		}	
+	}
+	else
+	{
+		if (untouchable == 0)
+		{
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_WALKING:
+			case KOOPA_STATE_SPINNING:
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					SetState(MARIO_STATE_DIE);
+				}
+				break;
+			case KOOPA_STATE_SHELL:
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			}
+		}
+	}
+}
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
 }
-void CMario::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
+void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	if (e->ny > 0)
 		e->obj->Delete();

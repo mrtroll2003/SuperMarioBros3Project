@@ -339,8 +339,8 @@ void LoadAssetsGoomba()
 
 	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
 
-	sprites->Add(ID_SPRITE_GOOMBA_WALK + 1, 4, 13, 22, 30, texEnemy);  
-	sprites->Add(ID_SPRITE_GOOMBA_WALK + 2, 24, 13, 42, 30, texEnemy); 
+	sprites->Add(ID_SPRITE_GOOMBA_WALK + 1, 4, 13, 21, 30, texEnemy);  
+	sprites->Add(ID_SPRITE_GOOMBA_WALK + 2, 24, 13, 41, 30, texEnemy); 
 
 	sprites->Add(ID_SPRITE_GOOMBA_DIE + 1, 44, 19, 62, 30, texEnemy);
 
@@ -368,10 +368,10 @@ void LoadAssetsKoopa()
 	sprites->Add(ID_SPRITE_KOOPA_SHELL + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
 
 	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
-	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 2, 49, 138, 49 + 17, 138 + 17, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 2, 70, 138, 70 + 17, 138 + 17, texEnemy);
 
 	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
-	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 2, 49, 138, 49 + 17, 138 + 17, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 2, 70, 138, 70 + 17, 138 + 17, texEnemy);
 
 	LPANIMATION ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_WALKING + 1);
@@ -504,7 +504,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
-	//textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
+	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 
 	LoadAssetsEnvironment();
 	LoadAssetsMario();

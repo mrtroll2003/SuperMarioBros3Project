@@ -124,6 +124,16 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			switch (koopa->GetState())
 			{
 			case KOOPA_STATE_WALKING:
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					SetState(MARIO_STATE_DIE);
+				}
+				break;
 			case KOOPA_STATE_SPINNING:
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -136,6 +146,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				}
 				break;
 			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
 			case KOOPA_STATE_SHAKING:
 				koopa->SetState(KOOPA_STATE_SPINNING);
 				break;

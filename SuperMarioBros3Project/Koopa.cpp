@@ -52,7 +52,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	/*
+	
 	if ((state == KOOPA_STATE_SHELL) && (GetTickCount64() - shell_start > KOOPA_SHELL_TIMEOUT))
 	{
 		SetState(KOOPA_STATE_SHAKING);
@@ -62,7 +62,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(KOOPA_STATE_WALKING);
 		shell_start = GetTickCount64();
-	}*/
+	}
 	
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -74,11 +74,11 @@ void CKoopa::Render()
 	{
 		aniId = ID_ANI_KOOPA_SHELL;
 	}
-	if (state = KOOPA_STATE_SHAKING)
+	if (state == KOOPA_STATE_SHAKING)
 	{
 		aniId = ID_ANI_KOOPA_SHAKING;
 	}
-	if (state = KOOPA_STATE_SPINNING)
+	if (state == KOOPA_STATE_SPINNING)
 	{
 		aniId = ID_ANI_KOOPA_SPINNING;
 	}
@@ -92,25 +92,25 @@ void CKoopa::SetState(int state)
 	switch (state)
 	{
 	case KOOPA_STATE_WALKING:
-		vx = -KOOPA_WALKING_SPEED;
+		vx = KOOPA_WALKING_SPEED;
+		//y -= 10;
 		DebugOut(L"Walking");
 		break;
 	case KOOPA_STATE_SPINNING:
 		vx = KOOPA_SPINNING_SPEED;
+		ay = 0;
+		//y -= 10;
 		DebugOut(L"Spinning");
 		break;
 	case KOOPA_STATE_SHELL:
 		shell_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_SHELL) / 2;
-		vx = 0;
-		vy = 0;
+		ax = 0; vx = 0;
 		DebugOut(L"Shell");
 		break;
 	case KOOPA_STATE_SHAKING:
 		shell_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_SHELL) / 2;
+		//y -= 10;
 		vx = 0;
-		vy = 0;
 		DebugOut(L"Shaking");
 		break;
 	}

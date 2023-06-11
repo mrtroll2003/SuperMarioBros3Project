@@ -7,10 +7,10 @@
 
 
 #define KOOPA_BBOX_WIDTH 17
-#define KOOPA_BBOX_HEIGHT 27
-#define KOOPA_BBOX_HEIGHT_SHELL 17
+#define KOOPA_BBOX_HEIGHT 24
+#define KOOPA_BBOX_HEIGHT_SHELL 14
 
-#define KOOPA_SHELL_TIMEOUT 15500
+#define KOOPA_SHELL_TIMEOUT 500
 
 #define KOOPA_STATE_WALKING 100
 #define KOOPA_STATE_SHELL 200
@@ -29,17 +29,17 @@ protected:
 
 	ULONGLONG shell_start;
 
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return 0; }
-	virtual void OnNoCollision(DWORD dt);
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 0; }
+	void OnNoCollision(DWORD dt);
 
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	CKoopa(float x, float y);
-	virtual void SetState(int state);
+	void SetState(int state);
 };
 

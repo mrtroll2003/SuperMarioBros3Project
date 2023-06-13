@@ -1,6 +1,8 @@
 #include <algorithm>
 #include "debug.h"
 
+
+
 #include "Brick.h"
 
 #include "Mario.h"
@@ -9,8 +11,12 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "Coin.h"
+#include "PowerUps.h"
 
 #include "Collision.h"
+
+extern list<LPGAMEOBJECT> objects;
+extern CMushroom* mr;
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -57,6 +63,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -162,8 +170,25 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
+	CQuestionBrick* qb = dynamic_cast<CQuestionBrick*>(e->obj);
 	if (e->ny > 0)
-		e->obj->Delete();
+		if (qb->GetQuesID() == ID_ITEM_MUSHROOM)
+		{
+			mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+			objects.push_back(mr);
+			qb->Delete();
+		}
+		else if (qb->GetQuesID() == ID_ITEM_COIN)
+		{
+			coin++;
+			qb->Delete();
+		}
+		
+}
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	SetLevel(MARIO_LEVEL_BIG);
+	e->obj->Delete();
 }
 //
 // Get animation ID for small Mario

@@ -12,8 +12,8 @@
 #define ID_ANI_QUESTION_BRICK 10500
 #define ID_ANI_NULL_BRICK 10600
 #define BRICK_WIDTH 16
-#define BRICK_BBOX_WIDTH 16
-#define BRICK_BBOX_HEIGHT 16
+#define BRICK_BBOX_WIDTH 16.0f
+#define BRICK_BBOX_HEIGHT 16.0f
 
 class CBrick : public CGameObject {
 public:
@@ -35,6 +35,8 @@ public:
 	CQuestionBrick(float x, float y, int id) : CBrick(x, y) { quesID = id; };
 	void Render();
 	void Update(DWORD dt) {}
+	float GetX() { return x; }
+	float GetY() { return y; }
 };
 class CNullBrick : public CBrick {
 public:

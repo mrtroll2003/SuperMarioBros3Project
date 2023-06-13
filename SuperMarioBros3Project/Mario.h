@@ -3,6 +3,8 @@
 
 #include "Animation.h"
 #include "Animations.h"
+#include "AssetIDs.h"
+#include "PowerUps.h"
 
 #include "debug.h"
 
@@ -119,6 +121,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();

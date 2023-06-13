@@ -38,6 +38,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Environment.h"
+#include "PowerUps.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -62,6 +63,7 @@
 
 CGame *game;
 CMario *mario;
+CMushroom* mr = NULL;
 
 list<LPGAMEOBJECT> objects;
 
@@ -466,16 +468,59 @@ void LoadAssetsCoin()
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
+	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
 
 	sprites->Add(ID_SPRITE_COIN + 1, 303, 99, 303 + 9, 99 + 15, texMisc);
 	sprites->Add(ID_SPRITE_COIN + 2, 321, 99, 321 + 9, 99 + 15, texMisc);
 	sprites->Add(ID_SPRITE_COIN + 3, 338, 99, 338 + 9, 99 + 15, texMisc);
+
+	sprites->Add(ID_SPRITE_MUSHROOM + 1, 130, 156, 130 + 17, 156 + 1, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 2, 130, 156, 130 + 17, 156 + 2, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 3, 130, 156, 130 + 17, 156 + 3, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 4, 130, 156, 130 + 17, 156 + 4, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 5, 130, 156, 130 + 17, 156 + 5, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 6, 130, 156, 130 + 17, 156 + 6, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 7, 130, 156, 130 + 17, 156 + 7, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 8, 130, 156, 130 + 17, 156 + 8, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 9, 130, 156, 130 + 17, 156 + 9, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 10, 130, 156, 130 + 17, 156 + 10, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 11, 130, 156, 130 + 17, 156 + 11, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 12, 130, 156, 130 + 17, 156 + 12, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 13, 130, 156, 130 + 17, 156 + 13, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 14, 130, 156, 130 + 17, 156 + 14, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 15, 130, 156, 130 + 17, 156 + 15, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 16, 130, 156, 130 + 17, 156 + 16, texEnvi);
+	sprites->Add(ID_SPRITE_MUSHROOM + 17, 130, 156, 130 + 17, 156 + 17, texEnvi);
 
 	LPANIMATION ani = new CAnimation(300);
 	ani->Add(ID_SPRITE_COIN + 1);
 	ani->Add(ID_SPRITE_COIN + 2);
 	ani->Add(ID_SPRITE_COIN + 3);
 	animations->Add(ID_ANI_COIN, ani);
+
+	ani = new CAnimation(50);
+	ani->Add(ID_SPRITE_MUSHROOM + 1);
+	ani->Add(ID_SPRITE_MUSHROOM + 2);
+	ani->Add(ID_SPRITE_MUSHROOM + 3);
+	ani->Add(ID_SPRITE_MUSHROOM + 4);
+	ani->Add(ID_SPRITE_MUSHROOM + 5);
+	ani->Add(ID_SPRITE_MUSHROOM + 6);
+	ani->Add(ID_SPRITE_MUSHROOM + 7);
+	ani->Add(ID_SPRITE_MUSHROOM + 8);
+	ani->Add(ID_SPRITE_MUSHROOM + 9);
+	ani->Add(ID_SPRITE_MUSHROOM + 10);
+	ani->Add(ID_SPRITE_MUSHROOM + 11);
+	ani->Add(ID_SPRITE_MUSHROOM + 12);
+	ani->Add(ID_SPRITE_MUSHROOM + 13);
+	ani->Add(ID_SPRITE_MUSHROOM + 14);
+	ani->Add(ID_SPRITE_MUSHROOM + 15);
+	ani->Add(ID_SPRITE_MUSHROOM + 16);
+	ani->Add(ID_SPRITE_MUSHROOM + 17);
+	animations->Add(ID_ANI_SHROOM_RISING, ani);
+
+	ani = new CAnimation(300);
+	ani->Add(ID_SPRITE_MUSHROOM + 17);
+	animations->Add(ID_ANI_SHROOM_MOVING, ani);
 }
 
 void LoadAssetsOther()
@@ -487,6 +532,7 @@ void LoadAssetsOther()
 	sprites->Add(ID_SPRITE_CLOUD_BEGIN, 390, 117, 390 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_CLOUD_MIDDLE, 408, 117, 408 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_CLOUD_END, 426, 117, 426 + 15, 117 + 15, texMisc);
+
 
 }
 

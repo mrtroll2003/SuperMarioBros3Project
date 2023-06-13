@@ -93,23 +93,23 @@ void CKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_WALKING:
 		vx = KOOPA_WALKING_SPEED;
-		//y -= 10;
+		y -= 10;
 		DebugOut(L"Walking");
 		break;
 	case KOOPA_STATE_SPINNING:
 		vx = KOOPA_SPINNING_SPEED;
-		ay = 0;
-		//y -= 10;
+		y -= 10;
 		DebugOut(L"Spinning");
 		break;
 	case KOOPA_STATE_SHELL:
 		shell_start = GetTickCount64();
-		ax = 0; vx = 0;
+		vx = 0;
+		y -= 10;
 		DebugOut(L"Shell");
 		break;
 	case KOOPA_STATE_SHAKING:
 		shell_start = GetTickCount64();
-		//y -= 10;
+		y -= 10;
 		vx = 0;
 		DebugOut(L"Shaking");
 		break;

@@ -77,3 +77,52 @@ void CMushroom::SetState(int state)
 		break;
 	}
 }
+
+CBlockCoin::CBlockCoin(float x, float y) : CPowerUps(x, y)
+{
+	this->ax = 0;
+	this->ay = 0;
+	timeout_start = GetTickCount64();
+	SetState(COIN_STATE_RISING);
+}
+void CBlockCoin::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_BLOCK_COIN)->Render(x, y);
+}
+void CBlockCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+	vx += ax * dt;
+
+	if (GetTickCount64() - timeout_start > (COIN_ANI_TIMEOUT / 2))
+	{
+		SetState(COIN_STATE_FALLING);
+	}
+	if (GetTickCount64() - timeout_start > COIN_ANI_TIMEOUT)
+	{
+		Delete();
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+void CBlockCoin::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+void CBlockCoin::SetState(int state)
+{
+	CGameObject::SetState(state);
+	switch (state)
+	{
+	case COIN_STATE_RISING:
+		vx = 0;
+		vy = -COIN_SPEED;
+		break;
+	case COIN_STATE_FALLING:
+		vy = COIN_SPEED;
+		break;
+	}
+}

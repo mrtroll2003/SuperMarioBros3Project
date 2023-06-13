@@ -17,6 +17,7 @@
 
 extern list<LPGAMEOBJECT> objects;
 extern CMushroom* mr;
+extern CBlockCoin* bc;
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -180,6 +181,8 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 		}
 		else if (qb->GetQuesID() == ID_ITEM_COIN)
 		{
+			bc = new CBlockCoin(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+			objects.push_back(bc);
 			coin++;
 			qb->Delete();
 		}

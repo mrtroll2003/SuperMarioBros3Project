@@ -84,6 +84,9 @@
     <ClInclude Include="PowerUps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Firetrap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp">
@@ -141,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PowerUps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firetrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -64,6 +64,7 @@
 CGame *game;
 CMario *mario;
 CMushroom* mr = NULL;
+CBlockCoin* bc = NULL;
 
 list<LPGAMEOBJECT> objects;
 
@@ -474,6 +475,12 @@ void LoadAssetsCoin()
 	sprites->Add(ID_SPRITE_COIN + 2, 321, 99, 321 + 9, 99 + 15, texMisc);
 	sprites->Add(ID_SPRITE_COIN + 3, 338, 99, 338 + 9, 99 + 15, texMisc);
 
+	sprites->Add(ID_SPRITE_BLOCK_COIN + 1, 229, 6, 229 + 15, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_BLOCK_COIN + 2, 247, 6, 247 + 11, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_BLOCK_COIN + 3, 261, 6, 261 + 7, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_BLOCK_COIN + 4, 271, 6, 271 + 11, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_BLOCK_COIN + 5, 285, 6, 285 + 15, 6 + 17, texEnvi);
+
 	sprites->Add(ID_SPRITE_MUSHROOM + 1, 130, 156, 130 + 17, 156 + 1, texEnvi);
 	sprites->Add(ID_SPRITE_MUSHROOM + 2, 130, 156, 130 + 17, 156 + 2, texEnvi);
 	sprites->Add(ID_SPRITE_MUSHROOM + 3, 130, 156, 130 + 17, 156 + 3, texEnvi);
@@ -497,6 +504,14 @@ void LoadAssetsCoin()
 	ani->Add(ID_SPRITE_COIN + 2);
 	ani->Add(ID_SPRITE_COIN + 3);
 	animations->Add(ID_ANI_COIN, ani);
+
+	ani = new CAnimation(75);
+	ani->Add(ID_SPRITE_BLOCK_COIN + 1);
+	ani->Add(ID_SPRITE_BLOCK_COIN + 2);
+	ani->Add(ID_SPRITE_BLOCK_COIN + 3);
+	ani->Add(ID_SPRITE_BLOCK_COIN + 4);
+	ani->Add(ID_SPRITE_BLOCK_COIN + 5);
+	animations->Add(ID_ANI_BLOCK_COIN, ani);
 
 	ani = new CAnimation(50);
 	ani->Add(ID_SPRITE_MUSHROOM + 1);

@@ -35,6 +35,7 @@
 #include "Brick.h"
 #include "Goomba.h"
 #include "Koopa.h"
+#include "Firetrap.h"
 #include "Coin.h"
 #include "Platform.h"
 #include "Environment.h"
@@ -58,11 +59,14 @@
 #define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario_transparent.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc_transparent.png"
 #define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies_transparent.png"
+#define TEXTURE_PATH_ENEMY_FLIP TEXTURES_DIR "\\enemies_transparent_flipped.png"
+#define TEXTURE_PATH_ENEMY_2 TEXTURES_DIR "\\enemies2_transparent.png"
+#define TEXTURE_PATH_ENEMY_2_FLIP TEXTURES_DIR "\\enemies2_transparent_flipped.png"
 #define TEXTURE_PATH_ENVIRONMENT TEXTURES_DIR "\\environment_transparent.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
 CGame *game;
-CMario *mario;
+CMario *mario = NULL;
 CMushroom* mr = NULL;
 CBlockCoin* bc = NULL;
 
@@ -538,6 +542,48 @@ void LoadAssetsCoin()
 	animations->Add(ID_ANI_SHROOM_MOVING, ani);
 }
 
+void LoadAssetsFiretrap()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPTEXTURE texEnemy2 = textures->Get(ID_TEX_ENEMY_2);
+	LPTEXTURE texEnemy2Flip = textures->Get(ID_TEX_ENEMY_2_FLIP);
+	//down left
+	sprites->Add(ID_SPRITE_FIRETRAP + 1, 127, 143, 127+17, 143 + 33, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 2, 143, 143, 143 + 17, 143 + 33, texEnemy2);
+	//upleft
+	sprites->Add(ID_SPRITE_FIRETRAP + 3, 159, 143, 159 + 17, 143 + 33, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 4, 175, 143, 175 + 17, 143 + 33, texEnemy2);
+	//up right
+	sprites->Add(ID_SPRITE_FIRETRAP + 5, 495, 143, 495 + 17, 143 + 33, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 6, 511, 143, 511 + 17, 143 + 33, texEnemy2Flip);
+	//down right
+	sprites->Add(ID_SPRITE_FIRETRAP + 7, 527, 143, 527 + 17, 143 + 33, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 8, 543, 143, 543 + 17, 143 + 33, texEnemy2Flip);
+
+	LPANIMATION ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_FIRETRAP + 1, 300);
+	ani->Add(ID_SPRITE_FIRETRAP + 2);
+	animations->Add(ID_ANI_FIRETRAP_AIMING_DOWN_LEFT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_FIRETRAP + 3, 300);
+	ani->Add(ID_SPRITE_FIRETRAP + 4);
+	animations->Add(ID_ANI_FIRETRAP_AIMING_UP_LEFT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_FIRETRAP + 5);
+	ani->Add(ID_SPRITE_FIRETRAP + 6, 300);
+	animations->Add(ID_ANI_FIRETRAP_AIMING_UP_RIGHT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_FIRETRAP + 7);
+	ani->Add(ID_SPRITE_FIRETRAP + 8, 300);
+	animations->Add(ID_ANI_FIRETRAP_AIMING_DOWN_RIGHT, ani);
+}
+
 void LoadAssetsOther()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -563,6 +609,9 @@ void LoadResources()
 
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
+	textures->Add(ID_TEX_ENEMY_FLIP, TEXTURE_PATH_ENEMY_FLIP);
+	textures->Add(ID_TEX_ENEMY_2, TEXTURE_PATH_ENEMY_2);
+	textures->Add(ID_TEX_ENEMY_2_FLIP, TEXTURE_PATH_ENEMY_2_FLIP);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
@@ -573,6 +622,7 @@ void LoadResources()
 	LoadAssetsKoopa();
 	LoadAssetsBrick();
 	LoadAssetsCoin();
+	LoadAssetsFiretrap();
 	LoadAssetsOther();
 }
 
@@ -625,6 +675,9 @@ void Reload()
 		CInviBase* b = new CInviBase(296.5f + i * BRICK_WIDTH, BRICK_Y - 69.5f);
 		objects.push_back(b);
 	}
+	//Render Firetrap before pipe->pipe will cover the firetrap
+	CFiretrap* ft1 = new CFiretrap(300.0f, BRICK_Y - 21.0f);
+	objects.push_back(ft1);
 	CPipe* p = new CPipe(400.0f, BRICK_Y - 21.0f);
 	objects.push_back(p);
 	CSingleCloud* sc1 = new CSingleCloud(350.0f, 50.0f);

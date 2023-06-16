@@ -1,10 +1,10 @@
 #pragma once
 #define PI 3.14159265
 
-#define FIRETRAP_MOVING_SPEED 0.12f
-#define FIRETRAP_MOVE_TIMEOUT 150
-#define FIRETRAP_IDLE_TIMEOUT 250
-#define FIRETRAP_AIM_TIMEOUT 200
+#define FIRETRAP_MOVING_SPEED 0.06f
+#define FIRETRAP_MOVE_TIMEOUT 670
+#define FIRETRAP_IDLE_TIMEOUT 2500
+#define FIRETRAP_AIM_TIMEOUT 2000
 
 #define FIRETRAP_BBOX_WIDTH 17
 #define FIRETRAP_BBOX_HEIGHT 33
@@ -22,6 +22,8 @@
 #define ID_ANI_FIRETRAP_AIMING_UP_RIGHT 7003
 #define ID_ANI_FIRETRAP_AIMING_DOWN_RIGHT 7004
 
+#define ID_ANI_FIREBALL 7100
+
 #include "GameObject.h"
 #include <cmath>
 #include "Mario.h"
@@ -36,10 +38,9 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
-
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	CFiretrap(float x, float y);
 	virtual void SetState(int state);

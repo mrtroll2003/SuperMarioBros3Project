@@ -10,6 +10,7 @@
 
 #include "Goomba.h"
 #include "Koopa.h"
+#include "Firetrap.h"
 #include "Coin.h"
 #include "PowerUps.h"
 
@@ -66,8 +67,25 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CFiretrap*>(e->obj))
+		OnCollisionWithHostile(e);
 }
 
+void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);

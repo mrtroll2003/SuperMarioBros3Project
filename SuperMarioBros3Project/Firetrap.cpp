@@ -1,6 +1,7 @@
 #include "Firetrap.h"
 #include <algorithm>
 #include "debug.h"
+#include "Brick.h"
 CFiretrap::CFiretrap(float x, float y) : CGameObject(x,y)
 {
 	timer_start = GetTickCount64();
@@ -58,16 +59,20 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if((state == FIRETRAP_STATE_AIMING_DOWN_LEFT) || (state == FIRETRAP_STATE_AIMING_DOWN_RIGHT) || (state == FIRETRAP_STATE_AIMING_UP_LEFT) || (state == FIRETRAP_STATE_AIMING_UP_RIGHT))
 	{
-		if (disX >= 0 && disY >= 0)
+		if (disX >= 0 && disY <  0)
 			SetState(FIRETRAP_STATE_AIMING_DOWN_LEFT);
-		if (disX >= 0 && disY < 0)
+		if (disX >= 0 && disY >= 0)
 			SetState(FIRETRAP_STATE_AIMING_UP_LEFT);
-		if (disX < 0 && disY >= 0)
-			SetState(FIRETRAP_STATE_AIMING_DOWN_RIGHT);
 		if (disX < 0 && disY < 0)
+			SetState(FIRETRAP_STATE_AIMING_DOWN_RIGHT);
+		if (disX < 0 && disY >= 0)
 			SetState(FIRETRAP_STATE_AIMING_UP_RIGHT);
 		if (GetTickCount64() - timer_start > FIRETRAP_AIM_TIMEOUT)
+		{
+			timer_start = GetTickCount64();
 			SetState(FIRETRAP_STATE_FALLING);
+		}
+			
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -79,7 +84,20 @@ void CFiretrap::OnNoCollision(DWORD dt)
 	x += vx * dt;
 	y += vy * dt;
 }
+void CFiretrap::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CPipe*>(e->obj)) return;
 
+	if (e->ny != 0)
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
+}
 void CFiretrap::SetState(int state)
 {
 	CGameObject::SetState(state);

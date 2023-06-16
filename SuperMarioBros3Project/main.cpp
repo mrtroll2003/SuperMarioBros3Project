@@ -368,22 +368,33 @@ void LoadAssetsKoopa()
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+	LPTEXTURE texEnemyFlip = textures->Get(ID_TEX_ENEMY_2_FLIP);
 
 	sprites->Add(ID_SPRITE_KOOPA_WALKING + 1, 5, 129, 5 + 17, 129 + 27, texEnemy);
 	sprites->Add(ID_SPRITE_KOOPA_WALKING + 2, 27, 129, 27 + 17, 129 + 27, texEnemy);
 
 	sprites->Add(ID_SPRITE_KOOPA_SHELL + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
 
-	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
-	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 2, 70, 138, 70 + 17, 138 + 17, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 1, 544, 49, 544 + 15, 49 + 15, texEnemyFlip);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 2, 527, 49, 527 + 15, 49 + 15, texEnemyFlip);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 3, 512, 49, 512 + 15, 49 + 15, texEnemyFlip);
+	sprites->Add(ID_SPRITE_KOOPA_SPINNING + 4, 497, 49, 497 + 15, 49 + 15, texEnemyFlip);
 
 	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 1, 49, 138, 49 + 17, 138 + 17, texEnemy);
 	sprites->Add(ID_SPRITE_KOOPA_SHAKING + 2, 70, 138, 70 + 17, 138 + 17, texEnemy);
+
+	sprites->Add(ID_SPRITE_KOOPA_WALKING_RIGHT + 1, 576, 52, 576 + 15, 51 + 25, texEnemyFlip);
+	sprites->Add(ID_SPRITE_KOOPA_WALKING_RIGHT + 2, 560, 52, 560 + 15, 51 + 26, texEnemyFlip);
 
 	LPANIMATION ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_WALKING + 1);
 	ani->Add(ID_SPRITE_KOOPA_WALKING + 2);
 	animations->Add(ID_ANI_KOOPA_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_WALKING_RIGHT + 1);
+	ani->Add(ID_SPRITE_KOOPA_WALKING_RIGHT + 2);
+	animations->Add(ID_ANI_KOOPA_WALKING_RIGHT, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_SHELL + 1);
@@ -397,6 +408,8 @@ void LoadAssetsKoopa()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_SPINNING + 1);
 	ani->Add(ID_SPRITE_KOOPA_SPINNING + 2);
+	ani->Add(ID_SPRITE_KOOPA_SPINNING + 3);
+	ani->Add(ID_SPRITE_KOOPA_SPINNING + 4);
 	animations->Add(ID_ANI_KOOPA_SPINNING, ani);
 }
 void LoadAssetsBrick()
@@ -551,17 +564,24 @@ void LoadAssetsFiretrap()
 	LPTEXTURE texEnemy2 = textures->Get(ID_TEX_ENEMY_2);
 	LPTEXTURE texEnemy2Flip = textures->Get(ID_TEX_ENEMY_2_FLIP);
 	//down left
-	sprites->Add(ID_SPRITE_FIRETRAP + 1, 127, 143, 127+17, 143 + 33, texEnemy2);
-	sprites->Add(ID_SPRITE_FIRETRAP + 2, 143, 143, 143 + 17, 143 + 33, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 1, 128, 145, 128 + 15, 145 + 31, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 2, 144, 145, 144 + 15, 145 + 31, texEnemy2);
 	//upleft
-	sprites->Add(ID_SPRITE_FIRETRAP + 3, 159, 143, 159 + 17, 143 + 33, texEnemy2);
-	sprites->Add(ID_SPRITE_FIRETRAP + 4, 175, 143, 175 + 17, 143 + 33, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 3, 160, 145, 160 + 15, 145 + 31, texEnemy2);
+	sprites->Add(ID_SPRITE_FIRETRAP + 4, 176, 145, 176 + 15, 145 + 31, texEnemy2);
 	//up right
-	sprites->Add(ID_SPRITE_FIRETRAP + 5, 495, 143, 495 + 17, 143 + 33, texEnemy2Flip);
-	sprites->Add(ID_SPRITE_FIRETRAP + 6, 511, 143, 511 + 17, 143 + 33, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 5, 496, 145, 496 + 15, 145 + 31, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 6, 512, 145, 512 + 15, 145 + 31, texEnemy2Flip);
 	//down right
-	sprites->Add(ID_SPRITE_FIRETRAP + 7, 527, 143, 527 + 17, 143 + 33, texEnemy2Flip);
-	sprites->Add(ID_SPRITE_FIRETRAP + 8, 543, 143, 543 + 17, 143 + 33, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 7, 528, 145, 528 + 15, 145 + 31, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_FIRETRAP + 8, 544, 145, 544 + 15, 145 + 31, texEnemy2Flip);
+
+	//fireball
+	sprites->Add(ID_SPRITE_FIREBALL + 1, 163, 179, 163 + 9, 179 + 9, texEnemy2);
+	sprites->Add(ID_SPRITE_FIREBALL + 2, 179, 179, 179 + 9, 179 + 9, texEnemy2);
+	sprites->Add(ID_SPRITE_FIREBALL + 3, 163, 195, 163 + 9, 195 + 9, texEnemy2);
+	sprites->Add(ID_SPRITE_FIREBALL + 4, 179, 195, 179 + 9, 195 + 9, texEnemy2);
+
 
 	LPANIMATION ani = new CAnimation(150);
 	ani->Add(ID_SPRITE_FIRETRAP + 1, 300);
@@ -582,6 +602,13 @@ void LoadAssetsFiretrap()
 	ani->Add(ID_SPRITE_FIRETRAP + 7);
 	ani->Add(ID_SPRITE_FIRETRAP + 8, 300);
 	animations->Add(ID_ANI_FIRETRAP_AIMING_DOWN_RIGHT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_FIREBALL + 1);
+	ani->Add(ID_SPRITE_FIREBALL + 2);
+	ani->Add(ID_SPRITE_FIREBALL + 3);
+	ani->Add(ID_SPRITE_FIREBALL + 4);
+	animations->Add(ID_ANI_FIREBALL, ani);
 }
 
 void LoadAssetsOther()
@@ -676,7 +703,7 @@ void Reload()
 		objects.push_back(b);
 	}
 	//Render Firetrap before pipe->pipe will cover the firetrap
-	CFiretrap* ft1 = new CFiretrap(300.0f, BRICK_Y - 21.0f);
+	CFiretrap* ft1 = new CFiretrap(400.0f, BRICK_Y - 21.0f);
 	objects.push_back(ft1);
 	CPipe* p = new CPipe(400.0f, BRICK_Y - 21.0f);
 	objects.push_back(p);

@@ -21,6 +21,7 @@
 #define ID_ANI_KOOPA_SHELL 6002
 #define ID_ANI_KOOPA_SHAKING 6003
 #define ID_ANI_KOOPA_SPINNING 6004
+#define ID_ANI_KOOPA_WALKING_RIGHT 6005
 class CKoopa : public CGameObject
 {
 protected:

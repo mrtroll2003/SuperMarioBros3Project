@@ -441,7 +441,7 @@ void LoadAssetsBrick()
 
 	sprites->Add(ID_SPRITE_NULL_BRICK + 1, 205, 7, 205 + 15, 7 + 15, texEnvi);
 
-	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 49, 7 + 15, texEnvi);
+	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 47, 7 + 15, texEnvi);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BRICK + 1);
@@ -735,7 +735,32 @@ void Reload()
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
-		CBaseBrick* b = new CBaseBrick(i * BRICK_WIDTH * 3.0f, BRICK_Y+10.0f);
+		CBaseBrick* b = new CBaseBrick(i * BASE_BRICK_BBOX_WIDTH, BRICK_Y+10.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		CBaseBrick* b = new CBaseBrick(695.0f + i * BRICK_WIDTH * 3.0f, BRICK_Y-7.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CBaseBrick* b = new CBaseBrick(1237.0f + i * BRICK_WIDTH * 3.0f, BRICK_Y + 10.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CBaseBrick* b = new CBaseBrick(1608.0f + i * BASE_BRICK_BBOX_WIDTH, BRICK_Y + 10.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 12; i++)
+	{
+		CBaseBrick* b = new CBaseBrick(1749.0f + i * BRICK_WIDTH * 3.0f, BRICK_Y + 10.0f);
+		objects.push_back(b);
+	}
+	for (int i = 0; i < 12; i++)
+	{
+		CBaseBrick* b = new CBaseBrick(2345.0f + i * BRICK_WIDTH * 3.0f, BRICK_Y + 10.0f);
 		objects.push_back(b);
 	}
 
@@ -770,12 +795,20 @@ void Reload()
 	objects.push_back(nb2);
 	CNullBrick* nb3 = new CNullBrick((550.0f - 96.0f + 16.0f), BRICK_Y - (69.5f + 16.0f));
 	objects.push_back(nb3);
+	CNullBrick* nb4 = new CNullBrick(715.0f, BRICK_Y - 22.0f);
+	objects.push_back(nb4);
+	CNullBrick* nb5 = new CNullBrick(760.0f, BRICK_Y - 52.0f);
+	objects.push_back(nb5);
 	CQuestionBrick* qb1 = new CQuestionBrick(246.0f, BRICK_Y - 99.0f, ID_ITEM_COIN);
 	objects.push_back(qb1);
 	CQuestionBrick* qb2 = new CQuestionBrick(262.0f, BRICK_Y - 99.0f, ID_ITEM_MUSHROOM);
 	objects.push_back(qb2);
 	CQuestionBrick* qb3 = new CQuestionBrick((550.0f - 96.0f + 16.0f), BRICK_Y - (69.5f+16.0f), ID_ITEM_COIN);
 	objects.push_back(qb3);
+	CQuestionBrick* qb4 = new CQuestionBrick(715.0f, BRICK_Y - 22.0f);
+	objects.push_back(qb4);
+	CQuestionBrick* qb5 = new CQuestionBrick(760.0f, BRICK_Y - 52.0f, ID_ITEM_COIN);
+	objects.push_back(qb5);
 
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);
 	objects.push_back(goomba);

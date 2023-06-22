@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "AssetIDs.h"
 
 #define ID_ANI_BRICK 10000
 #define ID_ANI_GOLD_BRICK 10100
@@ -14,6 +15,7 @@
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16.0f
 #define BRICK_BBOX_HEIGHT 16.0f
+#define BASE_BRICK_BBOX_WIDTH 47.0f
 
 class CBrick : public CGameObject {
 public:
@@ -33,6 +35,7 @@ class CQuestionBrick : public CBrick {
 public:
 	int GetQuesID() { return quesID; }
 	CQuestionBrick(float x, float y, int id) : CBrick(x, y) { quesID = id; };
+	CQuestionBrick(float x, float y) : CBrick(x, y) { quesID = ID_ITEM_MUSHROOM; };
 	void Render();
 	void Update(DWORD dt) {}
 	float GetX() { return x; }
@@ -72,4 +75,11 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-
+/*
+class CStripeBrick : public CBrick
+{
+	CStripeBrick(float x, float y) : CBrick(x, y) {}
+	void Render();
+	void Update(DWORD dt) {}
+};
+*/

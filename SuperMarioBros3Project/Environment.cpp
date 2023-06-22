@@ -9,6 +9,11 @@ void CWideSquaredBush::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_WSB)->Render(x, y);
 }
+void CLowBush::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_LB)->Render(x, y);
+}
 void CSingleCloud::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -28,6 +33,11 @@ void CDColorPlat::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_ENVIRONMENT + 400)->Render(x, y);
+}
+void CTripPlat::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_TRIP_PLAT)->Render(x, y);
 }
 void CQuadPlat::Render()
 {

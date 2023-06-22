@@ -96,15 +96,19 @@ void LoadAssetsEnvironment()
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 1, 1, 78, 1 + 131, 78 + 67, texEnvi);
 
-	sprites->Add(ID_SPRITE_ENVIRONMENT + 2, 74, 1, 74 + 51, 1 + 24, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 2, 75, 2, 75 + 47, 2 + 22, texEnvi);
 
-	sprites->Add(ID_SPRITE_ENVIRONMENT + 3, 54, 6, 54 + 17, 6 + 17, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 3, 55, 7, 55 + 15, 6 + 16, texEnvi);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 4, 135, 69, 224, 150, texEnvi);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 5, 234, 37, 234 + 217, 37 + 113, texEnvi);
 
-	sprites->Add(ID_SPRITE_ENVIRONMENT + 6, 129, 1, 129 + 33, 25, texEnvi);
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 6, 130, 1, 130 + 31, 23, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 7, 536, 647, 536 + 63, 647 + 49, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 8, 153, 153, 153 + 185, 153 + 97, texEnvi);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -130,6 +134,14 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 6);
 	animations->Add(ID_ANI_SCLOUD, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 7);
+	animations->Add(ID_ANI_LB, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 8);
+	animations->Add(ID_ANI_TRIP_PLAT, ani);
 }
 void LoadAssetsMario()
 {
@@ -442,6 +454,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_NULL_BRICK + 1, 205, 7, 205 + 15, 7 + 15, texEnvi);
 
 	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 47, 7 + 15, texEnvi);
+
+	sprites->Add(ID_SPRITE_STRIPE_BRICK + 1, 167, 7, 167 + 15, 7 + 15, texEnvi);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BRICK + 1);
@@ -478,6 +492,10 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_NULL_BRICK + 1);
 	animations->Add(ID_ANI_NULL_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_STRIPE_BRICK + 1);
+	animations->Add(ID_ANI_STRIPE_BRICK, ani);
 }
 void LoadAssetsCoin()
 {
@@ -683,11 +701,11 @@ void Reload()
 	//Environment background
 	CWideSquaredBush* b = new CWideSquaredBush(68.5f, BRICK_Y - 20.0f);
 	objects.push_back(b);
-	CDoubleCloud* c = new CDoubleCloud(152.5f, 50.0f);
-	objects.push_back(c);
+	CDoubleCloud* c1 = new CDoubleCloud(152.5f, 50.0f);
+	objects.push_back(c1);
 	for (int i = 1; i < 4; i++)
 	{
-		CSingleBush* sb = new CSingleBush(150.0f + i * 18.0f, BRICK_Y -6.0f);
+		CSingleBush* sb = new CSingleBush(150.0f + i * 16.0f, BRICK_Y -6.0f);
 		objects.push_back(sb);
 	}
 	CDColorPlat* d = new CDColorPlat(300.0f, BRICK_Y -38.0f);
@@ -731,6 +749,37 @@ void Reload()
 	{
 		CInviBase* b = new CInviBase((550.0f + 15.5f) + i * (BRICK_WIDTH - 1), BRICK_Y - 20.5f);
 		objects.push_back(b);
+	}
+	CSingleCloud* sc2 = new CSingleCloud(715.0f, 50.0f);
+	objects.push_back(sc2);
+	CDoubleCloud* dc1 = new CDoubleCloud(812.0f, 69.0f);
+	objects.push_back(dc1);
+	for (int i = 0; i < 6; i++)
+	{
+		CSingleBush* sb = new CSingleBush(732.0f + i * 16.0f, BRICK_Y - 6.0f - 17.0f);
+		objects.push_back(sb);
+	}
+	CWideSquaredBush* wsb2 = new CWideSquaredBush(935.0f, BRICK_Y - 6.0f - 37.0f);
+	objects.push_back(wsb2);
+	CLowBush* lb1 = new CLowBush(1037.0f, BRICK_Y - 6.0f - 30.0f);
+	objects.push_back(lb1);
+	for (int i = 0; i < 2; i++)
+	{
+		CSingleBush* sb = new CSingleBush(1105.0f + i * 16.0f, BRICK_Y - 6.0f - 17.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CSingleBush* sb = new CSingleBush(1255.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(sb);
+	}
+	CTripPlat* tp = new CTripPlat(1420.0f, BRICK_Y - 46.0f);
+	objects.push_back(tp);
+
+	for (int i = 0; i < 2; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1562.0f + i * 16.0f, BRICK_Y - 38.0f - 32.0f);
+		objects.push_back(sb);
 	}
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
@@ -795,10 +844,15 @@ void Reload()
 	objects.push_back(nb2);
 	CNullBrick* nb3 = new CNullBrick((550.0f - 96.0f + 16.0f), BRICK_Y - (69.5f + 16.0f));
 	objects.push_back(nb3);
+
 	CNullBrick* nb4 = new CNullBrick(715.0f, BRICK_Y - 22.0f);
 	objects.push_back(nb4);
 	CNullBrick* nb5 = new CNullBrick(760.0f, BRICK_Y - 52.0f);
 	objects.push_back(nb5);
+
+	CNullBrick* nb6 = new CNullBrick(1530.0f, BRICK_Y - 38.0f);
+	objects.push_back(nb6);
+	//
 	CQuestionBrick* qb1 = new CQuestionBrick(246.0f, BRICK_Y - 99.0f, ID_ITEM_COIN);
 	objects.push_back(qb1);
 	CQuestionBrick* qb2 = new CQuestionBrick(262.0f, BRICK_Y - 99.0f, ID_ITEM_MUSHROOM);
@@ -809,11 +863,14 @@ void Reload()
 	objects.push_back(qb4);
 	CQuestionBrick* qb5 = new CQuestionBrick(760.0f, BRICK_Y - 52.0f, ID_ITEM_COIN);
 	objects.push_back(qb5);
-
+	CQuestionBrick* qb6 = new CQuestionBrick(1530.0f, BRICK_Y - 38.0f);
+	objects.push_back(qb6);
+	/*
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);
 	objects.push_back(goomba);
 	CKoopa* koopa = new CKoopa(150.0f, 40.0f);
 	objects.push_back(koopa);
+	*/
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }

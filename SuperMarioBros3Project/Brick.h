@@ -12,6 +12,7 @@
 #define ID_ANI_PIPE 10400
 #define ID_ANI_QUESTION_BRICK 10500
 #define ID_ANI_NULL_BRICK 10600
+#define ID_ANI_STRIPE_BRICK 10700
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16.0f
 #define BRICK_BBOX_HEIGHT 16.0f
@@ -75,11 +76,11 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-/*
+
 class CStripeBrick : public CBrick
 {
+public:
 	CStripeBrick(float x, float y) : CBrick(x, y) {}
 	void Render();
 	void Update(DWORD dt) {}
 };
-*/

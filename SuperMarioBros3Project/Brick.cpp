@@ -54,7 +54,11 @@ void CBaseBrick::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_BASE_BRICK)->Render(x, y);
 }
-
+void CStripeBrick::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_STRIPE_BRICK)->Render(x, y);
+}
 void CBaseBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x - BASE_BRICK_BBOX_WIDTH / 2;

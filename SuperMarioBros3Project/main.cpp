@@ -773,6 +773,8 @@ void Reload()
 		CSingleBush* sb = new CSingleBush(1255.0f + i * 16.0f, BRICK_Y - 6.0f);
 		objects.push_back(sb);
 	}
+	CSingleCloud* sc3 = new CSingleCloud(1255.0f, BRICK_Y - 115.0f);
+	objects.push_back(sc3);
 	CTripPlat* tp = new CTripPlat(1420.0f, BRICK_Y - 46.0f);
 	objects.push_back(tp);
 
@@ -780,6 +782,67 @@ void Reload()
 	{
 		CStripeBrick* sb = new CStripeBrick(1562.0f + i * 16.0f, BRICK_Y - 38.0f - 32.0f);
 		objects.push_back(sb);
+	}
+	CDoubleCloud* dc2 = new CDoubleCloud(1750.0f, BRICK_Y - 115.0f);
+	objects.push_back(dc2);
+
+	for (int i = 0; i < 3; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1639.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1655.0f + i * 16.0f, BRICK_Y - 22.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 1; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1671.0f + i * 16.0f, BRICK_Y - 38.0f);
+		objects.push_back(sb);
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1734.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1734.0f + i * 16.0f, BRICK_Y - 22.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 1; i++)
+	{
+		CStripeBrick* sb = new CStripeBrick(1734.0f + i * 16.0f, BRICK_Y - 38.0f);
+		objects.push_back(sb);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CSingleBush* sb = new CSingleBush(1800.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(sb);
+	}
+	CPipe* pl = new CPipe(1871.5f, BRICK_Y - 6.0f);
+	objects.push_back(pl);
+
+	CPipe* ph = new CPipe(1945.5f, BRICK_Y - 22.0f);
+	objects.push_back(ph);
+	CLowBush* lb2 = new CLowBush(1992.0f, BRICK_Y - 21.0f);
+	objects.push_back(lb2);
+	for (int i = 0; i < 7; i++)
+	{
+		CGoldBrick* gb = new CGoldBrick(2031.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(gb);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CGoldBrick* gb = new CGoldBrick(2047.0f + i * 16.0f, BRICK_Y - 22.0f);
+		objects.push_back(gb);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CGoldBrick* gb = new CGoldBrick(2063.0f + i * 16.0f, BRICK_Y - 38.0f);
+		objects.push_back(gb);
 	}
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)

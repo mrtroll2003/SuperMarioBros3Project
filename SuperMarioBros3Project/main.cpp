@@ -109,6 +109,10 @@ void LoadAssetsEnvironment()
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 7, 536, 647, 536 + 63, 647 + 49, texEnvi);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 8, 153, 153, 153 + 185, 153 + 97, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 9, 460, 5, 547, 148, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 10, 558, 19, 655, 148, texEnvi);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -142,6 +146,14 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 8);
 	animations->Add(ID_ANI_TRIP_PLAT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 9);
+	animations->Add(ID_ANI_HIGH_PLAT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 10);
+	animations->Add(ID_ANI_HB, ani);
 }
 void LoadAssetsMario()
 {
@@ -844,6 +856,30 @@ void Reload()
 		CGoldBrick* gb = new CGoldBrick(2063.0f + i * 16.0f, BRICK_Y - 38.0f);
 		objects.push_back(gb);
 	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		CGoldBrick* gb = new CGoldBrick(2031.0f + 9 * 16.0f + i * 16.0f, BRICK_Y - 6.0f);
+		objects.push_back(gb);
+	}
+	CGoldBrick* gb = new CGoldBrick(2031.0f + 9 * 16.0f, BRICK_Y - 22.0f);
+	objects.push_back(gb);
+	CHighPlat* hp = new CHighPlat(2251.0f, BRICK_Y - 70.0f);
+	objects.push_back(hp);
+	CPipe* flappy = new CPipe(2337.0f, BRICK_Y - 6.0f);
+	objects.push_back(flappy);
+	for (int i = 0; i < 3; i++)
+	{
+		CPipe* flappy = new CPipe(2337.0f, BRICK_Y - 6.0f - 16.0f - 97.0f - 48.0f * i);
+		objects.push_back(flappy);
+	}
+	CPipe* lp = new CPipe(2337.0f + 56.0f, BRICK_Y - 6.0f);
+	objects.push_back(lp);
+	CSingleCloud* sc4 = new CSingleCloud(2337.0f + 58.0f, BRICK_Y - 115.0f);
+	objects.push_back(sc4);
+	CHighBush* hb = new CHighBush(2475.0f, BRICK_Y - 60.0f);
+	objects.push_back(hb);
+
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{

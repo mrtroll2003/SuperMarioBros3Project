@@ -9,7 +9,9 @@
 #define ID_ANI_QUAD_PLAT 60500
 #define ID_ANI_SCLOUD 60600
 #define ID_ANI_LB 60700
+#define ID_ANI_HB 61000
 #define ID_ANI_TRIP_PLAT 60800
+#define ID_ANI_HIGH_PLAT 60900
 class CEnvironment: public CGameObject
 {
 public:
@@ -30,6 +32,12 @@ class CLowBush : public CEnvironment
 {
 public:
 	CLowBush(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CHighBush : public CEnvironment
+{
+public:
+	CHighBush(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };
 class CSingleCloud : public CEnvironment
@@ -66,5 +74,11 @@ class CQuadPlat : public CEnvironment
 {
 public:
 	CQuadPlat(float x, float y) : CEnvironment(x,y) {}
+	void Render();
+};
+class CHighPlat : public CEnvironment
+{
+public:
+	CHighPlat(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };

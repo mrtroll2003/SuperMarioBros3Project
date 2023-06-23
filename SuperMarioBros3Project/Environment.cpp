@@ -14,6 +14,11 @@ void CLowBush::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_LB)->Render(x, y);
 }
+void CHighBush::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_HB)->Render(x, y);
+}
 void CSingleCloud::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -43,4 +48,9 @@ void CQuadPlat::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_QUAD_PLAT)->Render(x, y);
+}
+void CHighPlat::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_HIGH_PLAT)->Render(x, y);
 }

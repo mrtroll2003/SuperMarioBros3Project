@@ -69,6 +69,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CFiretrap*>(e->obj))
 		OnCollisionWithHostile(e);
+	else if (dynamic_cast<CFireball*>(e->obj))
+		OnCollisionWithHostile(e);
 }
 
 void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)

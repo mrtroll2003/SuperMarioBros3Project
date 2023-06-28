@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "debug.h"
 #include "Brick.h"
+CFireball* fire;
+extern list<LPGAMEOBJECT> objects;
 CFiretrap::CFiretrap(float x, float y) : CGameObject(x,y)
 {
 	timer_start = GetTickCount64();
@@ -44,6 +46,7 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float disY = GetY() - 8 - mario->GetY();
 	if ((state == FIRETRAP_STATE_RISING) && (GetTickCount64() - timer_start > FIRETRAP_MOVE_TIMEOUT))
 	{
+		fire_start = GetTickCount64();
 		timer_start = GetTickCount64();
 		SetState(FIRETRAP_STATE_AIMING_DOWN_LEFT);
 	}
@@ -67,10 +70,43 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(FIRETRAP_STATE_AIMING_DOWN_RIGHT);
 		if (disX < 0 && disY >= 0)
 			SetState(FIRETRAP_STATE_AIMING_UP_RIGHT);
+		if (GetTickCount64() - fire_start > (FIRETRAP_AIM_TIMEOUT / 2) && count == 0)
+		{
+			switch (state)
+			{
+			case FIRETRAP_STATE_AIMING_DOWN_LEFT:
+				if (disY < -75)
+					fire = new CFireball(GetX() - 20, GetY() - 8 - 20, FIREBALL_STATE_LEFT3);
+				else 
+					fire = new CFireball(GetX() - 20, GetY() - 8 - 20, FIREBALL_STATE_LEFT4);
+				break;
+			case FIRETRAP_STATE_AIMING_UP_LEFT:
+				if (disY < 75)
+					fire = new CFireball(GetX() - 20, GetY() - 8 -20, FIREBALL_STATE_LEFT1);
+				else
+					fire = new CFireball(GetX() -20, GetY() - 8 -20, FIREBALL_STATE_LEFT2);
+				break;
+			case FIRETRAP_STATE_AIMING_UP_RIGHT:
+				if (disY < 75)
+					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				else
+					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				break;
+			case FIRETRAP_STATE_AIMING_DOWN_RIGHT:
+				if (disY < -75)
+					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				else
+					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				break;
+			}
+			objects.push_back(fire);
+			count++;
+		}
 		if (GetTickCount64() - timer_start > FIRETRAP_AIM_TIMEOUT)
 		{
 			timer_start = GetTickCount64();
 			SetState(FIRETRAP_STATE_FALLING);
+			count = 0;
 		}
 			
 	}
@@ -78,7 +114,6 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
-
 void CFiretrap::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
@@ -130,6 +165,91 @@ void CFiretrap::SetState(int state)
 	case FIRETRAP_STATE_AIMING_UP_RIGHT:
 		vy = 0;
 		DebugOut(L"UR_");
+		break;
+	}
+}
+
+CFireball::CFireball(float x, float y, int state) : CGameObject(x, y)
+{
+	timer = GetTickCount64();
+	SetState(state);
+}
+void CFireball::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_FIREBALL)->Render(x, y);
+}
+void CFireball::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	return;
+}
+void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (GetTickCount64() - timer > FIREBALL_TIMEOUT)
+	{
+		isDeleted = true;
+		return;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+void CFireball::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - FIREBALL_BBOX_WIDTH / 2;
+	top = y - FIREBALL_BBOX_HEIGHT / 2;
+	right = left + FIREBALL_BBOX_WIDTH;
+	bottom = top + FIREBALL_BBOX_HEIGHT;
+}
+void CFireball::SetState(int state)
+{
+	CGameObject::SetState(state);
+	switch (state)
+	{
+	case FIREBALL_STATE_LEFT1:
+		vx = -0.05f;
+		vy = -0.12f;
+		DebugOut(L"left1");
+		break;
+	case FIREBALL_STATE_LEFT2:
+		vx = -0.12f;
+		vy = -0.05f;
+		DebugOut(L"left2");
+		break;
+	case FIREBALL_STATE_LEFT3:
+		vx = -0.12f;
+		vy = 0.05f;
+		DebugOut(L"left3");
+		break;
+	case FIREBALL_STATE_LEFT4:
+		vx = -0.05f;
+		vy = 0.12f;
+		DebugOut(L"left4");
+		break;
+	case FIREBALL_STATE_RIGHT1:
+		vx = 0.05f;
+		vy = -0.12f;
+		DebugOut(L"R1");
+		break;
+	case FIREBALL_STATE_RIGHT2:
+		vx = 0.12f;
+		vy = -0.05f;
+		DebugOut(L"R2");
+		break;
+	case FIREBALL_STATE_RIGHT3:
+		vx = 0.12f;
+		vy = 0.05f;
+		DebugOut(L"R3");
+		break;
+	case FIREBALL_STATE_RIGHT4:
+		vx = 0.05f;
+		vy = 0.12f;
+		DebugOut(L"R4");
 		break;
 	}
 }

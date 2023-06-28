@@ -6,8 +6,13 @@
 #define FIRETRAP_IDLE_TIMEOUT 2500
 #define FIRETRAP_AIM_TIMEOUT 2000
 
-#define FIRETRAP_BBOX_WIDTH 17
-#define FIRETRAP_BBOX_HEIGHT 33
+
+#define FIRETRAP_BBOX_WIDTH 17.0f
+#define FIRETRAP_BBOX_HEIGHT 33.0f
+
+#define FIREBALL_BBOX_WIDTH 9.0f
+#define FIREBALL_BBOX_HEIGHT 9.0f
+#define FIREBALL_TIMEOUT 2000
 
 #define FIRETRAP_STATE_RISING 100
 #define FIRETRAP_STATE_AIMING_UP_LEFT 200
@@ -16,6 +21,15 @@
 #define FIRETRAP_STATE_AIMING_DOWN_RIGHT 500
 #define FIRETRAP_STATE_FALLING 600
 #define FIRETRAP_STATE_IDLE 700
+
+#define FIREBALL_STATE_LEFT1 100
+#define FIREBALL_STATE_LEFT2 200
+#define FIREBALL_STATE_LEFT3 300
+#define FIREBALL_STATE_LEFT4 400
+#define FIREBALL_STATE_RIGHT1 500
+#define FIREBALL_STATE_RIGHT2 600
+#define FIREBALL_STATE_RIGHT3 700
+#define FIREBALL_STATE_RIGHT4 800
 
 #define ID_ANI_FIRETRAP_AIMING_UP_LEFT 7001
 #define ID_ANI_FIRETRAP_AIMING_DOWN_LEFT 7002
@@ -29,10 +43,27 @@
 #include "Mario.h"
 
 extern CMario* mario;
+class CFireball : public CGameObject
+{
+protected:
+	ULONGLONG timer;
+	void Render();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	int IsBlocking() { return 0; }
+
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+public:
+	CFireball(float x, float y, int state);
+	void SetState(int state);
+};
 class CFiretrap : public CGameObject
 {
 protected:
 	ULONGLONG timer_start;
+	ULONGLONG fire_start;
+	int count;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -48,16 +79,5 @@ public:
 	float GetY() { return y; }
 };
 
-class CFireball : public CGameObject
-{
-protected:
-	void Render();
-	void Update(DWORD dt);
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	int IsCollidable() { return 1; };
-	int IsBlocking() { return 0; }
-	void OnNoCollision(DWORD dt);
-public:
-	CFireball(float x, float y, float vx);
-};
+
 

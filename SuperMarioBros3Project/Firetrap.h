@@ -36,6 +36,13 @@
 #define ID_ANI_FIRETRAP_AIMING_UP_RIGHT 7003
 #define ID_ANI_FIRETRAP_AIMING_DOWN_RIGHT 7004
 
+#define ID_ANI_GREEN_FIRETRAP_AIMING_UP_LEFT 7005
+#define ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_LEFT 7006
+#define ID_ANI_GREEN_FIRETRAP_AIMING_UP_RIGHT 7007
+#define ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_RIGHT 7008
+
+#define ID_ANI_GREEN_FLYTRAP 7009
+
 #define ID_ANI_FIREBALL 7100
 
 #include "GameObject.h"
@@ -77,6 +84,22 @@ public:
 	virtual void SetState(int state);
 	float GetX() { return x; }
 	float GetY() { return y; }
+};
+class CGreenFiretrap : public CFiretrap
+{
+protected:
+	void Render();
+public:
+	CGreenFiretrap(float x, float y) : CFiretrap(x, y) {}
+
+};
+class CGreenFlytrap : public CFiretrap
+{
+protected:
+	void Render();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+public:
+	CGreenFlytrap(float x, float y) : CFiretrap(x, y) {}
 };
 
 

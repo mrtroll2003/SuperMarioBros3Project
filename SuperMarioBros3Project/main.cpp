@@ -606,6 +606,22 @@ void LoadAssetsFiretrap()
 	sprites->Add(ID_SPRITE_FIRETRAP + 7, 528, 145, 528 + 15, 145 + 31, texEnemy2Flip);
 	sprites->Add(ID_SPRITE_FIRETRAP + 8, 544, 145, 544 + 15, 145 + 31, texEnemy2Flip);
 
+	//down left
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 1, 32, 145, 32 + 15, 145 + 31, texEnemy2);
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 2, 48, 145, 48 + 15, 145 + 31, texEnemy2);
+	//up left
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 3, 64, 145, 64 + 15, 145 + 31, texEnemy2);
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 4, 80, 145, 80 + 15, 145 + 31, texEnemy2);
+	//up right
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 5, 592, 145, 592 + 15, 145 + 31, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 6, 608, 145, 608 + 15, 145 + 31, texEnemy2Flip);
+	//down right
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 7, 624, 145, 624 + 15, 145 + 31, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_GREEN_FIRETRAP + 8, 640, 145, 640 + 15, 145 + 31, texEnemy2Flip);
+
+	sprites->Add(ID_SPRITE_GREEN_FLYTRAP + 1, 656, 145, 656 + 15, 145 + 31, texEnemy2Flip);
+	sprites->Add(ID_SPRITE_GREEN_FLYTRAP + 2, 672, 145, 672 + 15, 145 + 31, texEnemy2Flip);
+
 	//fireball
 	sprites->Add(ID_SPRITE_FIREBALL + 1, 163, 179, 163 + 9, 179 + 9, texEnemy2);
 	sprites->Add(ID_SPRITE_FIREBALL + 2, 179, 179, 179 + 9, 179 + 9, texEnemy2);
@@ -632,6 +648,31 @@ void LoadAssetsFiretrap()
 	ani->Add(ID_SPRITE_FIRETRAP + 7);
 	ani->Add(ID_SPRITE_FIRETRAP + 8, 300);
 	animations->Add(ID_ANI_FIRETRAP_AIMING_DOWN_RIGHT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 1, 300);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 2);
+	animations->Add(ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_LEFT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 3, 300);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 4);
+	animations->Add(ID_ANI_GREEN_FIRETRAP_AIMING_UP_LEFT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 5);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 6, 300);
+	animations->Add(ID_ANI_GREEN_FIRETRAP_AIMING_UP_RIGHT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 7);
+	ani->Add(ID_SPRITE_GREEN_FIRETRAP + 8, 300);
+	animations->Add(ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_RIGHT, ani);
+
+	ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_GREEN_FLYTRAP + 1);
+	ani->Add(ID_SPRITE_GREEN_FLYTRAP + 2, 300);
+	animations->Add(ID_ANI_GREEN_FLYTRAP, ani);
 
 	ani = new CAnimation(150);
 	ani->Add(ID_SPRITE_FIREBALL + 1);
@@ -834,9 +875,15 @@ void Reload()
 		CSingleBush* sb = new CSingleBush(1800.0f + i * 16.0f, BRICK_Y - 6.0f);
 		objects.push_back(sb);
 	}
+	//
+	CGreenFlytrap* ft3 = new CGreenFlytrap(1871.5f, BRICK_Y - 6.0f + 7.0f);
+	objects.push_back(ft3);
 	CPipe* pl = new CPipe(1871.5f, BRICK_Y - 6.0f);
 	objects.push_back(pl);
 
+	//
+	CGreenFiretrap* ft2 = new CGreenFiretrap(1945.0f, BRICK_Y - 22.0f);
+	objects.push_back(ft2);
 	CPipe* ph = new CPipe(1945.5f, BRICK_Y - 22.0f);
 	objects.push_back(ph);
 	CLowBush* lb2 = new CLowBush(1992.0f, BRICK_Y - 21.0f);

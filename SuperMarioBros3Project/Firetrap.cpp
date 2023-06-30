@@ -75,28 +75,28 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			switch (state)
 			{
 			case FIRETRAP_STATE_AIMING_DOWN_LEFT:
-				if (disY < -75)
-					fire = new CFireball(GetX() - 20, GetY() - 8 - 20, FIREBALL_STATE_LEFT3);
+				if (disY < -32)
+					fire = new CFireball(GetX() , GetY() - 8, FIREBALL_STATE_LEFT3);
 				else 
-					fire = new CFireball(GetX() - 20, GetY() - 8 - 20, FIREBALL_STATE_LEFT4);
+					fire = new CFireball(GetX() , GetY() - 8, FIREBALL_STATE_LEFT4);
 				break;
 			case FIRETRAP_STATE_AIMING_UP_LEFT:
-				if (disY < 75)
-					fire = new CFireball(GetX() - 20, GetY() - 8 -20, FIREBALL_STATE_LEFT1);
+				if (disY < 32)
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				else
-					fire = new CFireball(GetX() -20, GetY() - 8 -20, FIREBALL_STATE_LEFT2);
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT2);
 				break;
 			case FIRETRAP_STATE_AIMING_UP_RIGHT:
-				if (disY < 75)
-					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				if (disY < 32)
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				else
-					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				break;
 			case FIRETRAP_STATE_AIMING_DOWN_RIGHT:
-				if (disY < -75)
-					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+				if (disY < -32)
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				else
-					fire = new CFireball(GetX()+20, GetY() - 8-20, FIREBALL_STATE_LEFT1);
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				break;
 			}
 			objects.push_back(fire);
@@ -167,6 +167,31 @@ void CFiretrap::SetState(int state)
 		DebugOut(L"UR_");
 		break;
 	}
+}
+
+void CGreenFiretrap::Render()
+{
+	int aniId = ID_ANI_GREEN_FIRETRAP_AIMING_UP_LEFT;
+	switch (state)
+	{
+	case FIRETRAP_STATE_AIMING_UP_LEFT:
+		aniId = ID_ANI_GREEN_FIRETRAP_AIMING_UP_LEFT;
+		break;
+	case FIRETRAP_STATE_AIMING_DOWN_LEFT:
+		aniId = ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_LEFT;
+		break;
+	case FIRETRAP_STATE_AIMING_UP_RIGHT:
+		aniId = ID_ANI_GREEN_FIRETRAP_AIMING_UP_RIGHT;
+		break;
+	case FIRETRAP_STATE_AIMING_DOWN_RIGHT:
+		aniId = ID_ANI_GREEN_FIRETRAP_AIMING_DOWN_RIGHT;
+		break;
+	default:
+		break;
+	}
+
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	RenderBoundingBox();
 }
 
 CFireball::CFireball(float x, float y, int state) : CGameObject(x, y)
@@ -252,4 +277,37 @@ void CFireball::SetState(int state)
 		DebugOut(L"R4");
 		break;
 	}
+}
+
+void CGreenFlytrap::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_GREEN_FLYTRAP)->Render(x, y);
+	RenderBoundingBox();
+}
+void CGreenFlytrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if ((state == FIRETRAP_STATE_RISING) && (GetTickCount64() - timer_start > FIRETRAP_MOVE_TIMEOUT))
+	{
+		fire_start = GetTickCount64();
+		timer_start = GetTickCount64();
+		SetState(FIRETRAP_STATE_AIMING_DOWN_LEFT);
+	}
+	if ((state == FIRETRAP_STATE_FALLING) && (GetTickCount64() - timer_start > FIRETRAP_MOVE_TIMEOUT))
+	{
+		timer_start = GetTickCount64();
+		SetState(FIRETRAP_STATE_IDLE);
+	}
+	if ((state == FIRETRAP_STATE_IDLE) && (GetTickCount64() - timer_start > FIRETRAP_IDLE_TIMEOUT))
+	{
+		timer_start = GetTickCount64();
+		SetState(FIRETRAP_STATE_RISING);
+	}
+	if ((state == FIRETRAP_STATE_AIMING_DOWN_LEFT) && (GetTickCount64() - timer_start > FIRETRAP_AIM_TIMEOUT))
+	{
+		timer_start = GetTickCount64();
+		SetState(FIRETRAP_STATE_FALLING);
+	}
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

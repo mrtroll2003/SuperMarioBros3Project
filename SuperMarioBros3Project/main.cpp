@@ -906,7 +906,7 @@ void Reload()
 	}
 	CButton* bt = new CButton(2063.0f + 3 * 16.0f, BRICK_Y - 38.0f);
 	objects.push_back(bt);
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)//fix to 4 in the final
 	{
 		CGoldBrick* gb = new CGoldBrick(2063.0f + i * 16.0f, BRICK_Y - 38.0f);
 		objects.push_back(gb);

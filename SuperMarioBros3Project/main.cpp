@@ -69,6 +69,7 @@ CGame *game;
 CMario *mario = NULL;
 CMushroom* mr = NULL;
 CBlockCoin* bc = NULL;
+CCoin* cgb = NULL;
 
 list<LPGAMEOBJECT> objects;
 
@@ -686,13 +687,18 @@ void LoadAssetsOther()
 {
 	CTextures* textures = CTextures::GetInstance();
 	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(ID_SPRITE_CLOUD_BEGIN, 390, 117, 390 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_CLOUD_MIDDLE, 408, 117, 408 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_CLOUD_END, 426, 117, 426 + 15, 117 + 15, texMisc);
 
+	sprites->Add(ID_SPRITE_BUTTON, 335, 282, 335 + 10, 282 + 10, texMisc);
 
+	LPANIMATION ani = new CAnimation(150);
+	ani->Add(ID_SPRITE_BUTTON);
+	animations->Add(ID_ANI_BUTTON, ani);
 }
 
 /*
@@ -898,7 +904,9 @@ void Reload()
 		CGoldBrick* gb = new CGoldBrick(2047.0f + i * 16.0f, BRICK_Y - 22.0f);
 		objects.push_back(gb);
 	}
-	for (int i = 0; i < 4; i++)
+	CButton* bt = new CButton(2063.0f + 3 * 16.0f, BRICK_Y - 38.0f);
+	objects.push_back(bt);
+	for (int i = 0; i < 3; i++)
 	{
 		CGoldBrick* gb = new CGoldBrick(2063.0f + i * 16.0f, BRICK_Y - 38.0f);
 		objects.push_back(gb);

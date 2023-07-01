@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <typeinfo>
 #include "debug.h"
 
 
@@ -19,6 +20,7 @@
 extern list<LPGAMEOBJECT> objects;
 extern CMushroom* mr;
 extern CBlockCoin* bc;
+extern CCoin* cgb;
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -71,6 +73,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithHostile(e);
 	else if (dynamic_cast<CFireball*>(e->obj))
 		OnCollisionWithHostile(e);
+	else if (dynamic_cast<CButton*>(e->obj))
+		OnCollisionWithButton(e);
 }
 
 void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)
@@ -188,6 +192,19 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+}
+void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
+{
+	e->obj->Delete();
+	for(auto i : objects)
+		if (typeid(*static_cast<CGoldBrick*>(i)) == typeid(CGoldBrick))
+		{
+			float x = i->GetX();
+			float y = i->GetY();
+			i->Delete();
+			cgb = new CCoin(x, y);
+			objects.push_front(cgb);
+		}
 }
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {

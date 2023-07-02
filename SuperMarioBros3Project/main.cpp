@@ -453,11 +453,11 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 4, 353, 134, 353 + 15, 134 + 15, texMisc);
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
 
-	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
+	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_PIPE + 1, 4, 27, 37, 76, texEnvi);
 	//for debugging
-	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
+	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 1, 300, 117, 300 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 2, 318, 117, 318 + 15, 117 + 15, texMisc);
@@ -836,7 +836,21 @@ void Reload()
 	objects.push_back(sc3);
 	CTripPlat* tp = new CTripPlat(1420.0f, BRICK_Y - 46.0f);
 	objects.push_back(tp);
-
+	for (int i = 0; i < 7; i++)
+	{
+		CInviBase* ib = new CInviBase(1338.0f + i * (BRICK_WIDTH - 1), BRICK_Y - 22.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CInviBase* ib = new CInviBase(1338.0f + 32.0f + i * (BRICK_WIDTH - 1), BRICK_Y - 22.0f - 32.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CInviBase* ib = new CInviBase(1338.0f + 64.0f + i * (BRICK_WIDTH - 1), BRICK_Y - 22.0f - 32.0f - 32.0f);
+		objects.push_back(ib);
+	}
 	for (int i = 0; i < 2; i++)
 	{
 		CStripeBrick* sb = new CStripeBrick(1562.0f + i * 16.0f, BRICK_Y - 38.0f - 32.0f);
@@ -921,11 +935,31 @@ void Reload()
 	objects.push_back(gb);
 	CHighPlat* hp = new CHighPlat(2251.0f, BRICK_Y - 70.0f);
 	objects.push_back(hp);
+	for (int i = 0; i < 3; i++)
+	{
+		CInviBase* ib = new CInviBase(2215.0f + i * (BRICK_WIDTH - 1), BRICK_Y - 38.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CInviBase* ib = new CInviBase(2247.0f + i * (BRICK_WIDTH - 1), BRICK_Y - 38.0f - 96.0f);
+		objects.push_back(ib);
+	}
 	CPipe* flappy = new CPipe(2337.0f, BRICK_Y - 6.0f);
 	objects.push_back(flappy);
 	for (int i = 0; i < 3; i++)
 	{
 		CPipe* flappy = new CPipe(2337.0f, BRICK_Y - 6.0f - 16.0f - 97.0f - 48.0f * i);
+		objects.push_back(flappy);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CStripeBrick* flappy = new CStripeBrick(2330.0f + i * BRICK_WIDTH, BRICK_Y - 38.0f);
+		objects.push_back(flappy);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CStripeBrick* flappy = new CStripeBrick(2330.0f + i * BRICK_WIDTH, BRICK_Y - 38.0f - 64.0f);
 		objects.push_back(flappy);
 	}
 	CPipe* lp = new CPipe(2337.0f + 56.0f, BRICK_Y - 6.0f);

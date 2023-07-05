@@ -374,6 +374,11 @@ void LoadAssetsGoomba()
 	sprites->Add(ID_SPRITE_GOOMBA_WALK + 1, 4, 13, 21, 30, texEnemy);  
 	sprites->Add(ID_SPRITE_GOOMBA_WALK + 2, 24, 13, 41, 30, texEnemy); 
 
+	sprites->Add(ID_SPRITE_PARAGOOMBA + 1, 64, 11, 83, 29, texEnemy);
+	sprites->Add(ID_SPRITE_PARAGOOMBA + 2, 87, 11, 106, 29, texEnemy);
+	sprites->Add(ID_SPRITE_PARAGOOMBA + 3, 110, 6, 129, 29, texEnemy);
+	sprites->Add(ID_SPRITE_PARAGOOMBA + 4, 134, 6, 153, 29, texEnemy);
+
 	sprites->Add(ID_SPRITE_GOOMBA_DIE + 1, 44, 19, 62, 30, texEnemy);
 
 	LPANIMATION ani = new CAnimation(100);
@@ -385,6 +390,17 @@ void LoadAssetsGoomba()
 	ani->Add(ID_SPRITE_GOOMBA_DIE + 1);
 	animations->Add(ID_ANI_GOOMBA_DIE, ani);
 
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 1);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 2);
+	animations->Add(ID_ANI_PARAGOOMBA_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 1);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 3, 300);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 2);
+	ani->Add(ID_SPRITE_PARAGOOMBA + 4, 300);
+	animations->Add(ID_ANI_PARAGOOMBA_AIR, ani);
 }
 void LoadAssetsKoopa()
 {
@@ -762,6 +778,7 @@ void Reload()
 	objects.push_back(b);
 	CDoubleCloud* c1 = new CDoubleCloud(152.5f, 50.0f);
 	objects.push_back(c1);
+	
 	for (int i = 1; i < 4; i++)
 	{
 		CSingleBush* sb = new CSingleBush(150.0f + i * 16.0f, BRICK_Y -6.0f);
@@ -1053,6 +1070,8 @@ void Reload()
 	objects.push_back(qb5);
 	CQuestionBrick* qb6 = new CQuestionBrick(1530.0f, BRICK_Y - 38.0f);
 	objects.push_back(qb6);
+	CParaGoomba* pgb1 = new CParaGoomba(152.5f, 50.0f);
+	objects.push_back(pgb1);
 	/*
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);
 	objects.push_back(goomba);
@@ -1225,7 +1244,6 @@ int Run()
 		else
 			Sleep(tickPerFrame - dt);	
 	}
-
 	return 1;
 }
 

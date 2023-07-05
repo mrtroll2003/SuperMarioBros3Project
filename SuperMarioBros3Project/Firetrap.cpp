@@ -140,31 +140,31 @@ void CFiretrap::SetState(int state)
 	{
 	case FIRETRAP_STATE_RISING:
 		vy = -FIRETRAP_MOVING_SPEED;
-		DebugOut(L"Rising");
+		//DebugOut(L"Rising");
 		break;
 	case FIRETRAP_STATE_FALLING:
 		vy = FIRETRAP_MOVING_SPEED;
-		DebugOut(L"Falling");
+		//DebugOut(L"Falling");
 		break;
 	case FIRETRAP_STATE_IDLE:
 		vy = 0;
-		DebugOut(L"Idle");
+		//DebugOut(L"Idle");
 		break;
 	case FIRETRAP_STATE_AIMING_DOWN_LEFT:
 		vy = 0;
-		DebugOut(L"DL_");
+		//DebugOut(L"DL_");
 		break;
 	case FIRETRAP_STATE_AIMING_DOWN_RIGHT:
 		vy = 0;
-		DebugOut(L"DR_");
+		//DebugOut(L"DR_");
 		break;
 	case FIRETRAP_STATE_AIMING_UP_LEFT:
 		vy = 0;
-		DebugOut(L"UL_");
+		//DebugOut(L"UL_");
 		break;
 	case FIRETRAP_STATE_AIMING_UP_RIGHT:
 		vy = 0;
-		DebugOut(L"UR_");
+		//DebugOut(L"UR_");
 		break;
 	}
 }

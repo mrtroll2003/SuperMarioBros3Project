@@ -77,6 +77,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithButton(e);
 	else if (dynamic_cast<CParaGoomba*>(e->obj))
 		OnCollisionWithParaGoomba(e);
+	else if (dynamic_cast<CParaKoopa*>(e->obj))
+		OnCollisionWithParaKoopa(e);
 }
 
 void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)
@@ -197,6 +199,73 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 				break;
 		}	
+	}
+	else
+	{
+		if (untouchable == 0)
+		{
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_WALKING:
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					SetState(MARIO_STATE_DIE);
+				}
+				break;
+			case KOOPA_STATE_SPINNING:
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					SetState(MARIO_STATE_DIE);
+				}
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			}
+		}
+	}
+}
+void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
+{
+	CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
+	if (e->ny < 0)
+	{
+		switch (koopa->GetState())
+		{
+		case KOOPA_STATE_PARA:
+			koopa->SetState(KOOPA_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			break;
+		case KOOPA_STATE_WALKING:
+			koopa->SetState(KOOPA_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			break;
+		case KOOPA_STATE_SHELL:
+			koopa->SetState(KOOPA_STATE_SPINNING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			break;
+		case KOOPA_STATE_SHAKING:
+			koopa->SetState(KOOPA_STATE_SPINNING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			break;
+		case KOOPA_STATE_SPINNING:
+			koopa->SetState(KOOPA_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			break;
+		}
 	}
 	else
 	{

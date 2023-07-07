@@ -165,12 +165,12 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		timer = -1;
 		jump_count++;
 	}
-	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (isOnPlatform == true) && (jump_count < 3))
+	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (isOnPlatform) && (jump_count < 3))
 	{
-		SetState(GOOMBA_STATE_PARA_SHORT_JUMPING);
+		vy = -GOOMBA_SHORT_JUMP_DIST;
 		jump_count++;
 	}
-	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (isOnPlatform == true) && (jump_count == 3))
+	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (isOnPlatform) && (jump_count == 3))
 	{
 		SetState(GOOMBA_STATE_PARA_JUMPING);
 	}
@@ -184,8 +184,11 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
-
-	isOnPlatform = false;
+	if (vy != 0) isOnPlatform = false;
+	else isOnPlatform = true;
+	if (isOnPlatform)
+		DebugOut(L"on_");
+	else DebugOut(L"off_");
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

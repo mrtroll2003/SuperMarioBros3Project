@@ -4,7 +4,7 @@
 #define KOOPA_GRAVITY 0.002f
 #define KOOPA_WALKING_SPEED 0.05f
 #define KOOPA_SPINNING_SPEED 0.2f
-#define KOOPA_PARA_SPEED 0.1f
+#define KOOPA_PARA_SPEED 0.3f
 
 
 #define KOOPA_BBOX_WIDTH 17
@@ -12,6 +12,7 @@
 #define KOOPA_BBOX_HEIGHT_SHELL 14
 
 #define KOOPA_SHELL_TIMEOUT 2500
+#define KOOPA_JUMP_TIMEOUT 500
 
 #define KOOPA_STATE_WALKING 100
 #define KOOPA_STATE_SHELL 200
@@ -54,6 +55,7 @@ protected:
 	float ay;
 
 	ULONGLONG shell_start;
+	ULONGLONG jump_timer;
 	BOOLEAN isOnPlatform = false;
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

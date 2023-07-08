@@ -429,14 +429,14 @@ void LoadAssetsKoopa()
 	sprites->Add(ID_SPRITE_KOOPA_WALKING_RIGHT + 2, 560, 52, 560 + 15, 51 + 26, texEnemyFlip);
 
 	sprites->Add(ID_SPRITE_PARAKOOPA + 1, 93, 130, 93 + 15, 130 + 25, texEnemy);
-	sprites->Add(ID_SPRITE_PARAKOOPA + 2, 114, 130, 114 + 15, 130 + 25, texEnemy);
+	sprites->Add(ID_SPRITE_PARAKOOPA + 2, 114, 129, 114 + 15, 130 + 25, texEnemy);
 	sprites->Add(ID_SPRITE_PARAKOOPA + 3, 135, 129, 135 + 15, 130 + 25, texEnemy);
-	sprites->Add(ID_SPRITE_PARAKOOPA + 4, 157, 128, 93 + 15, 130 + 25, texEnemy);
+	sprites->Add(ID_SPRITE_PARAKOOPA + 4, 157, 128, 157 + 15, 130 + 25, texEnemy);
 
-	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 1, 371, 130, 371 + 15, 130 + 15, texEnemyFlip2);
-	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 2, 350, 130, 350 + 15, 130 + 15, texEnemyFlip2);
-	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 3, 329, 129, 329 + 15, 130 + 15, texEnemyFlip2);
-	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 4, 307, 128, 307 + 15, 130 + 15, texEnemyFlip2);
+	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 1, 371, 130, 371 + 15, 130 + 25, texEnemyFlip2);
+	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 2, 350, 130, 350 + 15, 130 + 25, texEnemyFlip2);
+	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 3, 329, 129, 329 + 15, 130 + 25, texEnemyFlip2);
+	sprites->Add(ID_SPRITE_PARAKOOPA_RIGHT + 4, 307, 128, 307 + 15, 130 + 25, texEnemyFlip2);
 
 	LPANIMATION ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_WALKING + 1);
@@ -1095,7 +1095,7 @@ void Reload()
 	objects.push_back(qb5);
 	CQuestionBrick* qb6 = new CQuestionBrick(1530.0f, BRICK_Y - 38.0f);
 	objects.push_back(qb6);
-	CParaGoomba* para1 = new CParaGoomba(152.5f, 50.0f);
+	CParaKoopa* para1 = new CParaKoopa(152.5f, 50.0f);
 	objects.push_back(para1);
 	/*
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);

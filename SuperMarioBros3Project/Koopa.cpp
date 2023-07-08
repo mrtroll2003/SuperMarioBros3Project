@@ -124,13 +124,15 @@ void CKoopa::SetState(int state)
 CParaKoopa::CParaKoopa(float x, float y) : CGameObject(x, y)
 {
 	this->ax = 0;
-	this->ay = KOOPA_GRAVITY;
+	this->ay = KOOPA_GRAVITY/2;
+	this->vx = KOOPA_WALKING_SPEED;
+	jump_timer = GetTickCount64();
 	shell_start = -1;
 	SetState(KOOPA_STATE_PARA);
 }
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_WALKING)
+	if (state == KOOPA_STATE_WALKING || state == KOOPA_STATE_PARA)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
 		top = y - KOOPA_BBOX_HEIGHT / 2;
@@ -180,6 +182,10 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+	if (vy < 0)
+	{
+		isOnPlatform = false;
+	}
 };
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
@@ -200,9 +206,9 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	if ((state == KOOPA_STATE_PARA) && (isOnPlatform))
+	if ((state == KOOPA_STATE_PARA) && (isOnPlatform) && (GetTickCount64() - jump_timer > KOOPA_JUMP_TIMEOUT))
 	{
-		vy = KOOPA_PARA_SPEED;
+		vy = -KOOPA_PARA_SPEED;
 	}
 	if ((state == KOOPA_STATE_SHELL) && (GetTickCount64() - shell_start > KOOPA_SHELL_TIMEOUT))
 	{
@@ -227,9 +233,8 @@ void CParaKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_PARA:
 		vy = -KOOPA_PARA_SPEED;
-		vx = KOOPA_WALKING_SPEED;
-		ay = KOOPA_GRAVITY;
-		y -= 10;
+		ay = KOOPA_GRAVITY/2;
+		//y -= 10;
 		DebugOut(L"Jumping_");
 		break;
 	case KOOPA_STATE_WALKING:

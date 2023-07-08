@@ -136,7 +136,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		switch (state)
+		switch (goomba->GetState())
 		{
 		case GOOMBA_STATE_WALKING:
 			goomba->SetState(GOOMBA_STATE_DIE);
@@ -274,6 +274,17 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 			switch (koopa->GetState())
 			{
 			case KOOPA_STATE_WALKING:
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					SetState(MARIO_STATE_DIE);
+				}
+				break;
+			case KOOPA_STATE_PARA:
 				if (level > MARIO_LEVEL_SMALL)
 				{
 					level = MARIO_LEVEL_SMALL;

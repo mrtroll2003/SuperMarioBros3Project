@@ -1095,7 +1095,7 @@ void Reload()
 	objects.push_back(qb5);
 	CQuestionBrick* qb6 = new CQuestionBrick(1530.0f, BRICK_Y - 38.0f);
 	objects.push_back(qb6);
-	CParaKoopa* para1 = new CParaKoopa(152.5f, 50.0f);
+	CParaGoomba* para1 = new CParaGoomba(152.5f, 50.0f);
 	objects.push_back(para1);
 	/*
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);

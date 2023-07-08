@@ -100,7 +100,8 @@ void CGoomba::SetState(int state)
 CParaGoomba::CParaGoomba(float x, float y) : CGameObject(x, y)
 {
 	this->ax = 0;
-	this->ay = GOOMBA_GRAVITY;
+	this->vx = GOOMBA_WALKING_SPEED;
+	this->ay = GOOMBA_GRAVITY/2;
 	timer = GetTickCount64();
 	SetState(GOOMBA_STATE_PARA_WALKING);
 }
@@ -123,9 +124,9 @@ void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 	else
 	{
 		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - 20 / 2;
+		top = y - 18 / 2;
 		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + 20;
+		bottom = top + 18;
 	}
 }
 void CParaGoomba::Render()
@@ -162,10 +163,10 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if ((state == GOOMBA_STATE_PARA_WALKING) && (GetTickCount64() - timer > GOOMBA_PARA_READY))
 	{
 		SetState(GOOMBA_STATE_PARA_SHORT_JUMPING);
-		timer = -1;
+		timer = GetTickCount64();
 		jump_count++;
 	}
-	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (isOnPlatform) && (jump_count < 3))
+	if ((state == GOOMBA_STATE_PARA_SHORT_JUMPING) && (GetTickCount64() - timer > GOOMBA_SJ_READY) && (isOnPlatform) && (jump_count < 3))
 	{
 		vy = -GOOMBA_SHORT_JUMP_DIST;
 		jump_count++;
@@ -184,8 +185,6 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
-	if (vy != 0) isOnPlatform = false;
-	else isOnPlatform = true;
 	if (isOnPlatform)
 		DebugOut(L"on_");
 	else DebugOut(L"off_");
@@ -196,9 +195,14 @@ void CParaGoomba::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+	if (vy < 0)
+	{
+		isOnPlatform = false;
+	}
 }
 void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	isOnPlatform = false;
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (e->ny != 0)
@@ -218,21 +222,20 @@ void CParaGoomba::SetState(int state)
 	switch (state)
 	{
 	case GOOMBA_STATE_PARA_JUMPING:
-		y -= 10;
-		jump_count == 0;
+		//y -= 10;
+		jump_count = 0;
 		vy = -GOOMBA_JUMP_DIST;
-		ay = GOOMBA_GRAVITY;
+		ay = GOOMBA_GRAVITY/2;
 		DebugOut(L"Jump_");
 		break;
 	case GOOMBA_STATE_PARA_SHORT_JUMPING:
-		y -= 20;
+		//y -= 20;
 		vy = -GOOMBA_SHORT_JUMP_DIST;
-		ay = GOOMBA_GRAVITY;
+		ay = GOOMBA_GRAVITY/2;
 		DebugOut(L"SJump_");
 		break;
 	case GOOMBA_STATE_PARA_WALKING:
-		y -= 10;
-		vx = -GOOMBA_WALKING_SPEED;
+		//y -= 10;
 		DebugOut(L"ParaWalk_");
 		break;
 	case GOOMBA_STATE_DIE:

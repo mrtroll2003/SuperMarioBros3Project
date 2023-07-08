@@ -183,6 +183,7 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 };
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	isOnPlatform = false;
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 	if (e->ny != 0)
@@ -213,8 +214,6 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPA_STATE_WALKING);
 		shell_start = GetTickCount64();
 	}
-
-	isOnPlatform = false;
 	if (isOnPlatform)
 		DebugOut(L"On_");
 	else DebugOut(L"Off_");

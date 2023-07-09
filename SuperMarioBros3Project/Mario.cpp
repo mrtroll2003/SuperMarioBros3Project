@@ -582,7 +582,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level>=MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{

@@ -232,6 +232,47 @@ void LoadAssetsMario()
 	sprites->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_LEFT + 1, 65, 40, 65 + 15, 40 + 15, texMario);
 	sprites->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_RIGHT + 1, 365, 40, 365 + 15, 40 + 15, texMario);
 
+	//tanooki
+	// IDLE
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_RIGHT + 1, 246, 154, 259, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_LEFT + 1, 186, 154, 199, 181, texMario);
+
+	// WALKING LEFT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_RIGHT + 2, 275, 154, 290, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_RIGHT + 3, 304, 154, 321, 181, texMario);
+
+	// WALKING RIGHT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_LEFT + 2, 155, 154, 170, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_LEFT + 3, 125, 154, 140, 181, texMario);
+
+	// RUNNING RIGHT 
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 1, 334, 154, 355, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 2, 334, 154, 355, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 3, 392, 154, 413, 181, texMario);
+
+	// RUNNING LEFT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 1, 91, 154, 112, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 2, 65, 154, 86, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 3, 34, 154, 55, 181, texMario);
+
+	// JUMP WALK RIGHT & LEFT 
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_WALK_RIGHT + 1, 395, 275, 412, 302, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_WALK_LEFT + 1, 35, 275, 52, 302, texMario);
+
+	// JUMP RUN RIGHT & LEFT 
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_RUN_RIGHT + 1, 394, 195, 413, 222, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_RUN_LEFT + 1, 35, 195, 52, 222, texMario);
+
+	// SIT RIGHT/LEFT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SIT_RIGHT + 1, 426, 239, 441, 256, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SIT_LEFT + 1, 5, 239, 20, 256, texMario);
+
+	// BRACING RIGHT/LEFT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_RIGHT + 1, 425, 154, 442, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_LEFT + 1, 5, 154, 22, 181, texMario);
+
+
+
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -361,6 +402,9 @@ void LoadAssetsMario()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_RIGHT + 1);
 	animations->Add(ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, ani);
+	
+	//tanooki
+
 }
 
 void LoadAssetsGoomba()

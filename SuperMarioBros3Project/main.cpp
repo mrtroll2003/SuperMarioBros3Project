@@ -268,10 +268,26 @@ void LoadAssetsMario()
 	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SIT_LEFT + 1, 2, 719, 23, 736, texMario);
 
 	// BRACING RIGHT/LEFT
-	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_RIGHT + 1, 425, 154, 442, 181, texMario);
-	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_LEFT + 1, 5, 154, 22, 181, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_RIGHT + 1, 425, 633, 440, 662, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_LEFT + 1, 5, 633, 20, 662, texMario);
 
+	//FLY LEFT/RIGHT
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_FLY_RIGHT + 1, 331, 714, 354, 740, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_FLY_RIGHT + 2, 361, 714, 384, 741, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_FLY_LEFT + 1, 91, 714, 114, 740, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_FLY_LEFT + 2, 61, 714, 84, 741, texMario);
 
+	//
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_RIGHT + 1, 272, 674, 294, 701, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_RIGHT + 2, 302, 674, 324, 701, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_LEFT + 1, 121, 674, 121 + 22, 701, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_LEFT + 2, 151, 674, 151 + 22, 701, texMario);
+
+	//TAIL FLICK
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 1, 243, 634, 263, 661, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 2, 215, 674, 230, 701, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 3, 182, 634, 202, 661, texMario);
+	sprites->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 4, 215, 633, 230, 661, texMario);
 
 	LPANIMATION ani;
 
@@ -404,7 +420,97 @@ void LoadAssetsMario()
 	animations->Add(ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, ani);
 	
 	//tanooki
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_RIGHT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_IDLE_RIGHT, ani);
 
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_LEFT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_IDLE_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_RIGHT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_RIGHT + 2);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_RIGHT + 3);
+	animations->Add(ID_ANI_MARIO_TANOOKI_WALKING_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_IDLE_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_LEFT + 2);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_WALKING_LEFT + 3);
+	animations->Add(ID_ANI_MARIO_TANOOKI_WALKING_LEFT, ani);
+
+	ani = new CAnimation(50);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 2);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_RIGHT + 3);
+	animations->Add(ID_ANI_MARIO_TANOOKI_RUNNING_RIGHT, ani);
+
+	// Mario runs faster hence animation speed should be faster
+	ani = new CAnimation(50);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 2);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_RUNNING_LEFT + 3);
+	animations->Add(ID_ANI_MARIO_TANOOKI_RUNNING_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_WALK_RIGHT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_JUMP_WALK_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_WALK_LEFT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_JUMP_WALK_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_RUN_RIGHT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_JUMP_RUN_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_JUMP_RUN_LEFT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_JUMP_RUN_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SIT_RIGHT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_SIT_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SIT_LEFT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_SIT_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_RIGHT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_BRACE_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_BRACE_LEFT + 1);
+	animations->Add(ID_ANI_MARIO_TANOOKI_BRACE_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_FLY_RIGHT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_FLY_RIGHT + 2);
+	animations->Add(ID_ANI_MARIO_TANOOKI_FLY_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_FLY_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_FLY_LEFT + 2);
+	animations->Add(ID_ANI_MARIO_TANOOKI_FLY_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_RIGHT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_RIGHT + 2);
+	animations->Add(ID_ANI_MARIO_TANOOKI_SLOWDROP_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_SLOWDROP_LEFT + 2);
+	animations->Add(ID_ANI_MARIO_TANOOKI_SLOWDROP_LEFT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 1);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 2);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 3);
+	ani->Add(ID_SPRITE_MARIO_TANOOKI_TAILFLICK + 4);
+	animations->Add(ID_ANI_MARIO_TANOOKI_TAILFLICK, ani);
 }
 
 void LoadAssetsGoomba()

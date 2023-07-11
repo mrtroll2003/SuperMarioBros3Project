@@ -480,6 +480,79 @@ int CMario::GetAniIdBig()
 
 	return aniId;
 }
+int CMario::GetAniIdTanooki()
+{
+	int aniId = -1;
+	if (!isOnPlatform)
+	{
+		if (ay == 0)
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_TANOOKI_FLY_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_TANOOKI_FLY_LEFT;
+		}
+		else if ((ay > 0) && (ay < MARIO_GRAVITY))
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_TANOOKI_SLOWDROP_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_TANOOKI_SLOWDROP_LEFT;
+		}
+		else if (abs(ax) == MARIO_ACCEL_RUN_X)
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_TANOOKI_JUMP_RUN_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_TANOOKI_JUMP_RUN_LEFT;
+		}
+		else if (state == MARIO_STATE_TAILFLICK)
+			aniId = ID_ANI_MARIO_TANOOKI_TAILFLICK;
+		else
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_TANOOKI_JUMP_WALK_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_TANOOKI_JUMP_WALK_LEFT;
+		}
+	}
+	else
+		if (isSitting)
+		{
+			if (nx > 0)
+				aniId = ID_ANI_MARIO_TANOOKI_SIT_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_TANOOKI_SIT_LEFT;
+		}
+		else
+			if (vx == 0)
+			{
+				if (nx > 0) aniId = ID_ANI_MARIO_TANOOKI_IDLE_RIGHT;
+				else aniId = ID_ANI_MARIO_TANOOKI_IDLE_LEFT;
+			}
+			else if (vx > 0)
+			{
+				if (ax < 0)
+					aniId = ID_ANI_MARIO_TANOOKI_BRACE_RIGHT;
+				else if (ax == MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_TANOOKI_RUNNING_RIGHT;
+				else if (ax == MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_TANOOKI_WALKING_RIGHT;
+			}
+			else // vx < 0
+			{
+				if (ax > 0)
+					aniId = ID_ANI_MARIO_TANOOKI_BRACE_LEFT;
+				else if (ax == -MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_TANOOKI_RUNNING_LEFT;
+				else if (ax == -MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_TANOOKI_WALKING_LEFT;
+			}
+
+	if (aniId == -1) aniId = ID_ANI_MARIO_TANOOKI_IDLE_RIGHT;
+
+	return aniId;
+}
 
 void CMario::Render()
 {
@@ -492,6 +565,8 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
+	else if (level == MARIO_LEVEL_TANOOKI)
+		aniId = GetAniIdTanooki();
 
 	animations->Get(aniId)->Render(x, y);
 

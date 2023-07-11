@@ -35,6 +35,14 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_FLY_RIGHT		700
+#define MARIO_STATE_FLY_LEFT		701
+
+#define MARIO_STATE_SLOWDROP		800
+
+#define MARIO_STATE_TAILFLICK		900
+
+
 
 #pragma region ANIMATION_ID
 
@@ -157,6 +165,7 @@ class CMario : public CGameObject
 	void OnCollisionWithHostile(LPCOLLISIONEVENT e);
 	void OnCollisionWithButton(LPCOLLISIONEVENT e);
 
+	int GetAniIdTanooki();
 	int GetAniIdBig();
 	int GetAniIdSmall();
 

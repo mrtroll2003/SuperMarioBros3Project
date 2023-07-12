@@ -17,8 +17,15 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		if ((mario->GetLevel() == MARIO_LEVEL_TANOOKI) && (GetTickCount64() - mario->GetRuntime() > MARIO_KICKSTART_TIME) && (mario->GetRuntime() != -1))
-			mario->SetState(MARIO_STATE_FLY);
+		if (mario->GetLevel() == MARIO_LEVEL_TANOOKI)
+		{
+			if (!mario->onPlat())
+				mario->SetState(MARIO_STATE_SLOWDROP);
+			else if ((GetTickCount64() - mario->GetRuntime() > MARIO_KICKSTART_TIME) && (mario->GetRuntime() != -1))
+				mario->SetState(MARIO_STATE_FLY);
+			else
+				mario->SetState(MARIO_STATE_JUMP);
+		}
 		else
 			mario->SetState(MARIO_STATE_JUMP);
 		break;

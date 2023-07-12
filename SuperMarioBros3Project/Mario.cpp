@@ -639,7 +639,9 @@ void CMario::SetState(int state)
 		//if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
 		ay = MARIO_GRAVITY;
 		break;
-
+	case MARIO_STATE_SLOWDROP:
+		ay = MARIO_GRAVITY / 10;
+		break;
 	case MARIO_STATE_SIT:
 		run_start = -1;
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)

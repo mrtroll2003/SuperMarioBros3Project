@@ -212,4 +212,5 @@ public:
 	float GetY() { return y; }
 	int GetLevel() { return level; }
 	ULONGLONG GetRuntime() { return run_start; }
+	BOOLEAN onPlat() { return isOnPlatform; }
 };

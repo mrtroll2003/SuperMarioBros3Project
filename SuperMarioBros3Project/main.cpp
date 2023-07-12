@@ -738,6 +738,8 @@ void LoadAssetsCoin()
 	sprites->Add(ID_SPRITE_MUSHROOM + 16, 130, 156, 130 + 17, 156 + 16, texEnvi);
 	sprites->Add(ID_SPRITE_MUSHROOM + 17, 130, 156, 130 + 17, 156 + 17, texEnvi);
 
+	sprites->Add(ID_SPRITE_TANOOKI_LEAF + 1, 300, 208, 300 + LEAF_BBOX_WIDTH, 208 + LEAF_BBOX_HEIGHT, texMisc);
+
 	LPANIMATION ani = new CAnimation(300);
 	ani->Add(ID_SPRITE_COIN + 1);
 	ani->Add(ID_SPRITE_COIN + 2);
@@ -775,6 +777,10 @@ void LoadAssetsCoin()
 	ani = new CAnimation(300);
 	ani->Add(ID_SPRITE_MUSHROOM + 17);
 	animations->Add(ID_ANI_SHROOM_MOVING, ani);
+
+	ani = new CAnimation(300);
+	ani->Add(ID_SPRITE_TANOOKI_LEAF + 1);
+	animations->Add(ID_ANI_TANOOKI_LEAF, ani);
 }
 
 void LoadAssetsFiretrap()

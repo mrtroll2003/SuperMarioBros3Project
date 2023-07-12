@@ -126,3 +126,46 @@ void CBlockCoin::SetState(int state)
 		break;
 	}
 }
+
+void CTanookiLeaf::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+void CTanookiLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	return;
+}
+CTanookiLeaf::CTanookiLeaf(float x, float y) : CPowerUps(x, y)
+{
+	this->ax = 0;
+	this->vy = COIN_SPEED;
+	this->ay = 0;
+	timeout_start = GetTickCount64();
+}
+void CTanookiLeaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - LEAF_BBOX_WIDTH / 2;
+	top = y - LEAF_BBOX_HEIGHT / 2;
+	right = left + LEAF_BBOX_WIDTH;
+	bottom = top + LEAF_BBOX_HEIGHT;
+}
+void CTanookiLeaf::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_TANOOKI_LEAF)->Render(x, y);
+	RenderBoundingBox();
+}
+void CTanookiLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+	vx += ax * dt;
+
+	if (GetTickCount64() - timeout_start > LEAF_RISE_TIMEOUT)
+	{
+		this->ay = GRAVITY;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}

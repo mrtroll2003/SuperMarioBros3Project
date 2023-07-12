@@ -220,9 +220,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPA_STATE_WALKING);
 		shell_start = GetTickCount64();
 	}
-	if (isOnPlatform)
-		DebugOut(L"On_");
-	else DebugOut(L"Off_");
+	
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

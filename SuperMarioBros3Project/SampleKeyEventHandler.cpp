@@ -17,7 +17,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		mario->SetState(MARIO_STATE_JUMP);
+		if ((mario->GetLevel() == MARIO_LEVEL_TANOOKI) && (GetTickCount64() - mario->GetRuntime() > MARIO_KICKSTART_TIME) && (mario->GetRuntime() != -1))
+			mario->SetState(MARIO_STATE_FLY);
+		else
+			mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
@@ -25,8 +28,16 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
+	case DIK_3:
+		mario->SetLevel(MARIO_LEVEL_TANOOKI);
+		break;
 	case DIK_R: // reset
 		Reload();
+		break;
+	
+	case DIK_D:
+		if (mario->GetLevel() == MARIO_LEVEL_TANOOKI)
+			mario->SetState(MARIO_STATE_TAILFLICK);
 		break;
 	}
 }
@@ -49,7 +60,6 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	CGame* game = CGame::GetInstance();
-
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))

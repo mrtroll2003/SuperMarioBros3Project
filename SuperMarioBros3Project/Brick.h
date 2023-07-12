@@ -36,7 +36,7 @@ class CQuestionBrick : public CBrick {
 public:
 	int GetQuesID() { return quesID; }
 	CQuestionBrick(float x, float y, int id) : CBrick(x, y) { quesID = id; };
-	CQuestionBrick(float x, float y) : CBrick(x, y) { quesID = ID_ITEM_MUSHROOM; };
+	CQuestionBrick(float x, float y) : CBrick(x, y) { quesID = ID_ITEM_TANOOKI; };
 	void Render();
 	void Update(DWORD dt) {}
 	float GetX() { return x; }

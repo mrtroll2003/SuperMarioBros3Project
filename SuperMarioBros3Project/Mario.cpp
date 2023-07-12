@@ -35,6 +35,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if ((flick == 1) && GetTickCount64() - tailflick_start > MARIO_TAILFLICK_TIME)
+	{
+		flick = 0;
+		SetState(MARIO_STATE_IDLE);
+	}
 
 	isOnPlatform = false;
 
@@ -69,6 +74,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CTanookiLeaf*>(e->obj))
+		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CFiretrap*>(e->obj))
 		OnCollisionWithHostile(e);
 	else if (dynamic_cast<CFireball*>(e->obj))
@@ -358,6 +365,11 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	SetLevel(MARIO_LEVEL_BIG);
 	e->obj->Delete();
 }
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	SetLevel(MARIO_LEVEL_TANOOKI);
+	e->obj->Delete();
+}
 //
 // Get animation ID for small Mario
 //
@@ -548,7 +560,7 @@ int CMario::GetAniIdTanooki()
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_TANOOKI_WALKING_LEFT;
 			}
-
+	if (flick == 1) aniId = ID_ANI_MARIO_TANOOKI_TAILFLICK;
 	if (aniId == -1) aniId = ID_ANI_MARIO_TANOOKI_IDLE_RIGHT;
 
 	return aniId;
@@ -584,30 +596,35 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		if (run_start == -1) run_start = GetTickCount64();
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		if (run_start == -1) run_start = GetTickCount64();
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
+		run_start = -1;
 		maxVx = MARIO_WALKING_SPEED;
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		if (isSitting) break;
+		run_start = -1;
 		maxVx = -MARIO_WALKING_SPEED;
 		ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
+		run_start = -1;
 		if (isOnPlatform)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
@@ -615,13 +632,16 @@ void CMario::SetState(int state)
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
 		}
+		DebugOut(L"[INFO]TIME: %d", GetTickCount64() - run_start);
 		break;
-
+	
 	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		//if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		ay = MARIO_GRAVITY;
 		break;
 
 	case MARIO_STATE_SIT:
+		run_start = -1;
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
 		{
 			state = MARIO_STATE_IDLE;
@@ -630,7 +650,6 @@ void CMario::SetState(int state)
 			y +=MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
-
 	case MARIO_STATE_SIT_RELEASE:
 		if (isSitting)
 		{
@@ -639,13 +658,27 @@ void CMario::SetState(int state)
 			y -= MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
-
+	case MARIO_STATE_TAILFLICK:
+		tailflick_start = GetTickCount64();
+		flick = 1;
 	case MARIO_STATE_IDLE:
+		run_start = -1;
 		ax = 0.0f;
 		vx = 0.0f;
 		break;
-
+	case MARIO_STATE_FLY:
+		if (isOnPlatform)
+		{
+			vy = MARIO_FLY_SPEED;
+			ay = 0;
+			maxVx = MARIO_WALKING_SPEED;
+			ax = MARIO_ACCEL_WALK_X;
+			nx = this->nx;
+		}
+		
+		break;
 	case MARIO_STATE_DIE:
+		run_start = -1;
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;

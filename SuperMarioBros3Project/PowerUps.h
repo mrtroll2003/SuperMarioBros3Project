@@ -9,8 +9,12 @@
 
 #define SHROOM_RISE_TIMEOUT 850
 #define COIN_ANI_TIMEOUT 750
+#define LEAF_RISE_TIMEOUT 1250
 #define SHROOM_BBOX_WIDTH 17
 #define SHROOM_BBOX_HEIGHT 17
+#define LEAF_BBOX_WIDTH 15
+#define LEAF_BBOX_HEIGHT 13
+
 
 #define SHROOM_STATE_RISING 100
 #define SHROOM_STATE_MOVING 200
@@ -27,6 +31,8 @@
 #define ID_ANI_BLOCK_COIN (ID_ANI_POWER_UPS + 200)
 
 #define ID_ANI_POPUP_COIN (ID_ANI_POWER_UPS+200)
+
+#define ID_ANI_TANOOKI_LEAF (ID_ANI_POWER_UPS + 300)
 class CPowerUps : public CGameObject
 {
 protected:
@@ -68,4 +74,17 @@ public:
 	CBlockCoin(float x, float y);
 	void SetState(int state);
 };
-
+class CTanookiLeaf : public CPowerUps
+{
+protected:
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 0; }
+	ULONGLONG timeout_start;
+	void Render();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+public:
+	CTanookiLeaf(float x, float y);
+};

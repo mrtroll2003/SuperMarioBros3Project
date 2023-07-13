@@ -49,6 +49,11 @@ int CInviBase::IsDirectionColliable(float nx, float ny)
 	if ((nx == 0 && ny == -1))return 1;
 	else return 0;
 }
+void CCloudBrick::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_CLOUD_BRICK)->Render(x, y);
+}
 void CBaseBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();

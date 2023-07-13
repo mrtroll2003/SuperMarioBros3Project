@@ -54,3 +54,8 @@ void CHighPlat::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_HIGH_PLAT)->Render(x, y);
 }
+void CSkyPlat::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_SKY_PLAT)->Render(x, y);
+}

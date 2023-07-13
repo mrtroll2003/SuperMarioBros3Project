@@ -13,6 +13,7 @@
 #define ID_ANI_QUESTION_BRICK 10500
 #define ID_ANI_NULL_BRICK 10600
 #define ID_ANI_STRIPE_BRICK 10700
+#define ID_ANI_CLOUD_BRICK 10800
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16.0f
 #define BRICK_BBOX_HEIGHT 16.0f
@@ -60,6 +61,12 @@ class CInviBase : public CInviBrick {
 public:
 	CInviBase(float x, float y) :CInviBrick(x, y) {}
 	int IsDirectionColliable(float nx, float ny);
+};
+class CCloudBrick : public CBrick {
+public:
+	CCloudBrick(float x, float y) : CBrick(x, y) {}
+	void Render();
+	void Update(DWORD dt) {}
 };
 class CBaseBrick : public CBrick {
 public:

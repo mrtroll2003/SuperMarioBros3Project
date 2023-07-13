@@ -20,6 +20,7 @@
 extern list<LPGAMEOBJECT> objects;
 extern CMushroom* mr;
 extern CBlockCoin* bc;
+extern CTanookiLeaf* tl;
 extern CCoin* cgb;
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -92,7 +93,12 @@ void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)
 {
 	if (untouchable == 0)
 	{
-		if (level > MARIO_LEVEL_SMALL)
+		if (level > MARIO_LEVEL_BIG)
+		{
+			level = MARIO_LEVEL_BIG;
+			StartUntouchable();
+		}
+		else if (level > MARIO_LEVEL_SMALL)
 		{
 			level = MARIO_LEVEL_SMALL;
 			StartUntouchable();
@@ -108,7 +114,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
 	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0)
+	if ((e->ny < 0) || (flick == 1))
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
@@ -123,15 +129,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 			}
 		}
 	}
@@ -141,7 +139,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	CParaGoomba* goomba = dynamic_cast<CParaGoomba*>(e->obj);
 
 	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0)
+	if ((e->ny < 0) || (flick == 1))
 	{
 		switch (goomba->GetState())
 		{
@@ -169,15 +167,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 			}
 		}
 	}
@@ -185,7 +175,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-	if (e->ny < 0)
+	if ((e->ny < 0) || (flick == 1))
 	{
 		switch (koopa->GetState())
 		{
@@ -214,26 +204,10 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			switch (koopa->GetState())
 			{
 			case KOOPA_STATE_WALKING:
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 				break;
 			case KOOPA_STATE_SPINNING:
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 				break;
 			case KOOPA_STATE_SHELL:
 				koopa->SetState(KOOPA_STATE_SPINNING);
@@ -248,7 +222,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
 	CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
-	if (e->ny < 0)
+	if ((e->ny < 0) || (flick == 1))
 	{
 		switch (koopa->GetState())
 		{
@@ -281,37 +255,13 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 			switch (koopa->GetState())
 			{
 			case KOOPA_STATE_WALKING:
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 				break;
 			case KOOPA_STATE_PARA:
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 				break;
 			case KOOPA_STATE_SPINNING:
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithHostile(e);
 				break;
 			case KOOPA_STATE_SHELL:
 				koopa->SetState(KOOPA_STATE_SPINNING);
@@ -356,6 +306,15 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 			bc = new CBlockCoin(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
 			objects.push_back(bc);
 			coin++;
+			qb->Delete();
+		}
+		else if (qb->GetQuesID() == ID_ITEM_TANOOKI)
+		{
+			if(level >= MARIO_LEVEL_BIG)
+				tl = new CTanookiLeaf(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+			else
+				mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+			objects.push_back(bc);
 			qb->Delete();
 		}
 		

@@ -70,6 +70,7 @@ CMario *mario = NULL;
 CMushroom* mr = NULL;
 CBlockCoin* bc = NULL;
 CCoin* cgb = NULL;
+CTanookiLeaf* tl = NULL;
 
 list<LPGAMEOBJECT> objects;
 
@@ -114,6 +115,8 @@ void LoadAssetsEnvironment()
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 9, 460, 5, 547, 148, texEnvi);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 10, 558, 19, 655, 148, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 11, 126, 306, 213, 345, texEnvi);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -155,6 +158,10 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 10);
 	animations->Add(ID_ANI_HB, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 11);
+	animations->Add(ID_ANI_SKY_PLAT, ani);
 }
 void LoadAssetsMario()
 {
@@ -644,6 +651,8 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 4, 353, 134, 353 + 15, 134 + 15, texMisc);
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 5, 371, 134, 371 + 15, 134 + 15, texMisc);
 
+	sprites->Add(ID_SPRITE_CLOUD_BRICK + 1, 354, 243, 369, 258, texMisc);
+
 	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_PIPE + 1, 4, 27, 37, 76, texEnvi);
@@ -696,6 +705,10 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_NULL_BRICK + 1);
 	animations->Add(ID_ANI_NULL_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_CLOUD_BRICK + 1);
+	animations->Add(ID_ANI_CLOUD_BRICK, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_STRIPE_BRICK + 1);
@@ -937,7 +950,7 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 20.0f
+#define MARIO_START_X 1420.0f
 #define MARIO_START_Y 10.0f
 
 #define BRICK_X 0.0f
@@ -954,6 +967,56 @@ void ClearScene()
 void Reload()
 {
 	ClearScene();
+	//SkyBlock
+	CSkyPlat* sp = new CSkyPlat(1420.0f, BRICK_Y - 46.0f - 176.0f);
+	objects.push_back(sp);
+	for (int i = 0; i < 4; i++)
+	{
+		CInviBase* ib = new CInviBase(1420.0f - 32.0f + 16.0f * i, BRICK_Y - 12.0f - 46.0f - 176.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 1; i < 4; i++)
+	{
+		CCoin* c = new CCoin(1420.0f - 32.0f + 16.0f * i, BRICK_Y - 12.0f - 46.0f - 176.0f - 64.0f);
+		objects.push_back(c);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CCloudBrick* cb = new CCloudBrick(1486.0f + 16.0f * i, BRICK_Y - 12.0f - 176.0f);
+		objects.push_back(cb);
+	}
+	CQuestionBrick* qb = new CQuestionBrick(1486.0f + 16.0f * 2, BRICK_Y - 12.0f - 176.0f - 64.0f, ID_ITEM_COIN);
+	objects.push_back(qb);
+	for (int i = 0; i < 2; i++)
+	{
+		CCoin* ib = new CCoin(1486.0f + 16.0f * 4 + 16.0f * i, BRICK_Y - 28.0f - 176.0f - 64.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 0; i < 13; i++)
+	{
+		CCloudBrick* cb = new CCloudBrick(1566.0f + 16.0f * i, BRICK_Y - 12.0f - 176.0f - 16.0f);
+		objects.push_back(cb);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CCoin* ib = new CCoin(1566.0f + 16.0f * 3 + 16.0f * i, BRICK_Y - 12.0f - 176.0f - 64.0f);
+		objects.push_back(ib);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CCoin* ib = new CCoin(1566.0f + 16.0f * 8 + 16.0f * i, BRICK_Y - 28.0f - 176.0f - 64.0f);
+		objects.push_back(ib);
+	}
+	CCoin* c6 = new CCoin(1566.0f + 16.0f * 13, BRICK_Y - 176.0f - 60.0f);
+	objects.push_back(c6);
+	CCoin* c2 = new CCoin(1566.0f + 16.0f * 15, BRICK_Y - 28.0f - 176.0f - 64.0f);
+	objects.push_back(c2);
+	CCoin* c3 = new CCoin(1566.0f + 16.0f * 17, BRICK_Y - 12.0f - 176.0f - 64.0f);
+	objects.push_back(c3);	
+	CCoin* c4 = new CCoin(1566.0f + 16.0f * 20, BRICK_Y - 44.0f - 176.0f - 64.0f);
+	objects.push_back(c4);
+	CCoin* c5 = new CCoin(1566.0f + 16.0f * 22, BRICK_Y - 12.0f - 176.0f - 64.0f);
+	objects.push_back(c5);
 	//Environment background
 	CWideSquaredBush* b = new CWideSquaredBush(68.5f, BRICK_Y - 20.0f);
 	objects.push_back(b);
@@ -1307,10 +1370,11 @@ void Update(DWORD dt)
 	mario->GetPosition(cx, cy);
 
 	cx -= SCREEN_WIDTH / 2;
-	cy = 0;
-	//cy -= SCREEN_HEIGHT / 2;
+	//cy = 0;
+	cy -= SCREEN_HEIGHT / 2;
 
 	if (cx < 0) cx = 0;
+	if (cy > 0) cy = 0;
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
 }

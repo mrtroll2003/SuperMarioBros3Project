@@ -12,6 +12,7 @@
 #define ID_ANI_HB 61000
 #define ID_ANI_TRIP_PLAT 60800
 #define ID_ANI_HIGH_PLAT 60900
+#define ID_ANI_SKY_PLAT 61100
 class CEnvironment: public CGameObject
 {
 public:
@@ -80,5 +81,11 @@ class CHighPlat : public CEnvironment
 {
 public:
 	CHighPlat(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CSkyPlat : public CEnvironment
+{
+public:
+	CSkyPlat(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };

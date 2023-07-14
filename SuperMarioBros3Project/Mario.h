@@ -202,7 +202,7 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	void SetXY(float xx, float yy) { x = xx; y == yy; }
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	//void StartTailflick() { flick = 1; tailflick_start = GetTickCount64(); }
@@ -211,6 +211,7 @@ public:
 	float GetX() { return x; }
 	float GetY() { return y; }
 	int GetLevel() { return level; }
+
 	ULONGLONG GetRuntime() { return run_start; }
 	BOOLEAN onPlat() { return isOnPlatform; }
 };

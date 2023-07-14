@@ -116,6 +116,8 @@
 #define ID_SPRITE_NULL_BRICK 20600
 #define ID_SPRITE_STRIPE_BRICK 20700
 #define ID_SPRITE_CLOUD_BRICK 20800
+#define ID_SPRITE_SECRET_BRICK 20900
+#define ID_SPRITE_BLACK_PIPE 20910
 
 //define for question block's item id
 #define ID_ITEM_COIN 1

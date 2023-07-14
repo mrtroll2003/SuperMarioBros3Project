@@ -669,6 +669,7 @@ void LoadAssetsBrick()
 
 	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
 	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
+	LPTEXTURE texMap = textures->Get(ID_TEX_MAP);
 	sprites->Add(ID_SPRITE_BRICK + 1, 372, 153, 372 + 15, 153 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_GOLD_BRICK + 1, 299, 134, 299 + 15, 134 + 15, texMisc);
@@ -695,6 +696,10 @@ void LoadAssetsBrick()
 	sprites->Add(ID_SPRITE_BASE_BRICK + 1, 4, 7, 4 + 47, 7 + 15, texEnvi);
 
 	sprites->Add(ID_SPRITE_STRIPE_BRICK + 1, 167, 7, 167 + 15, 7 + 15, texEnvi);
+
+	sprites->Add(ID_SPRITE_SECRET_BRICK + 1, 352, 739, 352 + 15, 739 + 15, texEnvi);
+	
+	sprites->Add(ID_SPRITE_BLACK_PIPE + 1, 2096, 464, 2096 + 32, 464 + 32, texMap);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_BRICK + 1);
@@ -739,6 +744,14 @@ void LoadAssetsBrick()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_STRIPE_BRICK + 1);
 	animations->Add(ID_ANI_STRIPE_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_SECRET_BRICK + 1);
+	animations->Add(ID_ANI_SECRET_BRICK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_BLACK_PIPE + 1);
+	animations->Add(ID_ANI_BLACK_PIPE, ani);
 }
 void LoadAssetsCoin()
 {
@@ -1315,6 +1328,89 @@ void Reload()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 
+	//Secret room
+	for (int i = 0; i < 32; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + i * 16.0f, BRICK_Y);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 32; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + i * 16.0f, BRICK_Y - 16.0f);
+		objects.push_back(sbr);
+	}
+	for(int i = 2; i<=11;i++)
+		for (int j = 0; j < 8; j++)
+		{
+			CSecretBrick* sbr = new CSecretBrick(3000.0f + j * 16.0f, BRICK_Y - 16.0f * i);
+			objects.push_back(sbr);
+		}
+	for (int i = 0; i < 16; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 16 + i * 16.0f, BRICK_Y-32.0f);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 17 + i * 16.0f, BRICK_Y - 48.0f);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 14; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 18 + i * 16.0f, BRICK_Y -16.0f * 4);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 13; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 19 + i * 16.0f, BRICK_Y - 80.0f);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 12; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 20 + i * 16.0f, BRICK_Y - 96.0f);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i < 11; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 21 + i * 16.0f, BRICK_Y - 112.0f);
+		objects.push_back(sbr);
+	}
+	for (int i = 8; i <= 11; i++)
+		for (int j = 0; j < 8; j++)
+		{
+			CSecretBrick* sbr = new CSecretBrick(3000.0f + 16.0f * 24 + j * 16.0f, BRICK_Y - 16.0f * i);
+			objects.push_back(sbr);
+		}
+	for (int i = 10; i <= 21; i++)
+	{
+		CSecretBrick* sbr = new CSecretBrick(3000.0f + i * 16.0f, BRICK_Y - 16.0f * 11);
+		objects.push_back(sbr);
+	}
+	for (int i = 0; i<3 ; i++)
+		for (int j = 0; j < 2; j++)
+		{
+			CCoin* c = new CCoin(3000.0f +14 * 16.0f + j * 16.0f, BRICK_Y - 16.0f * 3 - 48.0f * i);
+			objects.push_back(c);
+		}
+	for (int i = 0; i < 2; i++)
+	{
+		CCoin* c = new CCoin(3000.0f + 13 * 16.0f, BRICK_Y - 16.0f * 4 - 64.0f * i);
+		objects.push_back(c);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CCoin* c = new CCoin(3000.0f + 16 * 16.0f, BRICK_Y - 16.0f * 4 - 16.0f * i);
+		objects.push_back(c);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CCoin* c = new CCoin(3000.0f + 16 * 16.0f, BRICK_Y - 16.0f * 7 - 16.0f * i);
+		objects.push_back(c);
+	}
+	CBlackPipe* bp1 = new CBlackPipe(3000.0f + 7 * 16.0f + 24.0f, BRICK_Y - 16.0f * 11 + 8.0f);
+	objects.push_back(bp1);
+	CBlackPipe* bp2 = new CBlackPipe(3000.0f + 21 * 16.0f + 24.0f, BRICK_Y - 16.0f * 11 + 9.0f);
+	objects.push_back(bp2);
 	// COINS 
 	for (int i = 0; i < 10; i++)
 	{

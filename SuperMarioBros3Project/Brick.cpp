@@ -83,3 +83,20 @@ void CPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
 	r = l + 33;
 	b = t + 49;
 }
+void CBlackPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - 32 / 2;
+	t = y - 32 / 2;
+	r = l + 32;
+	b = t + 32;
+}
+void CBlackPipe::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_BLACK_PIPE)->Render(x, y);
+}
+void CSecretBrick::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_SECRET_BRICK)->Render(x, y);
+}

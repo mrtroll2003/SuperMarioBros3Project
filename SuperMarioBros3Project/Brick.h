@@ -14,6 +14,8 @@
 #define ID_ANI_NULL_BRICK 10600
 #define ID_ANI_STRIPE_BRICK 10700
 #define ID_ANI_CLOUD_BRICK 10800
+#define ID_ANI_SECRET_BRICK 10900
+#define ID_ANI_BLACK_PIPE 10910
 #define BRICK_WIDTH 16
 #define BRICK_BBOX_WIDTH 16.0f
 #define BRICK_BBOX_HEIGHT 16.0f
@@ -83,11 +85,25 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-
+class CBlackPipe : public CBrick
+{
+public:
+	CBlackPipe(float x, float y) : CBrick(x, y) {}
+	void Update(DWORD dt) {}
+	void Render();
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
+};
 class CStripeBrick : public CBrick
 {
 public:
 	CStripeBrick(float x, float y) : CBrick(x, y) {}
+	void Render();
+	void Update(DWORD dt) {}
+};
+class CSecretBrick : public CBrick
+{
+public:
+	CSecretBrick(float x, float y) : CBrick(x, y) {}
 	void Render();
 	void Update(DWORD dt) {}
 };

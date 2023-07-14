@@ -64,6 +64,7 @@
 #define TEXTURE_PATH_ENEMY_2_FLIP TEXTURES_DIR "\\enemies2_transparent_flipped.png"
 #define TEXTURE_PATH_ENVIRONMENT TEXTURES_DIR "\\environment_transparent.png"
 #define TEXTURE_PATH_MAP TEXTURES_DIR "\\map_layout_transparent.png"
+#define TEXTURE_PATH_MAIN TEXTURES_DIR "\\main_screen.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
 CGame *game;
@@ -97,6 +98,7 @@ void LoadAssetsEnvironment()
 
 	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
 	LPTEXTURE texMap = textures->Get(ID_TEX_MAP);
+	LPTEXTURE texMain = textures->Get(ID_TEX_MAIN);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 1, 1, 78, 1 + 131, 78 + 67, texEnvi);
 
@@ -127,6 +129,8 @@ void LoadAssetsEnvironment()
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 14, 2576, 319, 2656, 416, texMap);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 15, 2752, 367, 2800, 416, texMap);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 16, 0, 0, 170, 159, texMain);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -188,6 +192,10 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 15);
 	animations->Add(ID_ANI_SBB, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 16);
+	animations->Add(ID_ANI_MAIN, ani);
 }
 void LoadAssetsMario()
 {
@@ -968,7 +976,9 @@ void LoadResources()
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
 	textures->Add(ID_TEX_MAP, TEXTURE_PATH_MAP);
+	textures->Add(ID_TEX_MAIN, TEXTURE_PATH_MAIN);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
+
 
 	LoadAssetsEnvironment();
 	LoadAssetsMario();
@@ -990,8 +1000,8 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 2420.0f
-#define MARIO_START_Y 10.0f
+#define MARIO_START_X 6000.0f
+#define MARIO_START_Y 132.0f
 
 #define BRICK_X 0.0f
 #define GOOMBA_X 200.0f
@@ -1411,6 +1421,24 @@ void Reload()
 	objects.push_back(bp1);
 	CBlackPipe* bp2 = new CBlackPipe(3000.0f + 21 * 16.0f + 24.0f, BRICK_Y - 16.0f * 11 + 9.0f);
 	objects.push_back(bp2);
+
+	//Main Screen
+	CInviBrick* cam = new CInviBrick(6000.0f, BRICK_Y);
+	objects.push_back(cam);
+	for (int i = 0; i < 10; i++)
+	{
+		CInviBrick* camera = new CInviBrick(6000.0f - 16.0f, BRICK_Y - 16.0f*i);
+		objects.push_back(camera);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		CInviBrick* camera = new CInviBrick(6000.0f + 16.0f, BRICK_Y - 16.0f * i);
+		objects.push_back(camera);
+	}
+	CNullBrick* nbcam = new CNullBrick(6000.0f, BRICK_Y - 48.0f);
+	objects.push_back(nbcam);
+	CMainScreen* main = new CMainScreen(6000.0f, BRICK_Y - 75.0f);
+	objects.push_back(main);
 	// COINS 
 	for (int i = 0; i < 10; i++)
 	{

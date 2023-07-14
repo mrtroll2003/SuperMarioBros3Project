@@ -79,3 +79,8 @@ void CSmallBlackBush::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_SBB)->Render(x, y);
 }
+void CMainScreen::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_MAIN)->Render(x, y);
+}

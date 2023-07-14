@@ -46,6 +46,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->GetLevel() == MARIO_LEVEL_TANOOKI)
 			mario->SetState(MARIO_STATE_TAILFLICK);
 		break;
+	case DIK_SPACE:
+		if (mario->GetX() >= 6000.0f)
+			mario->SetPosition(20.0f, 10.0f);
+		break;
 	}
 }
 

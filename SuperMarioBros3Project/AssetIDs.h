@@ -12,6 +12,7 @@
 #define ID_TEX_MISC 20
 #define ID_TEX_ENVI 30	
 #define ID_TEX_MAP 40
+#define ID_TEX_MAIN 50
 
 #pragma region MARIO 
 

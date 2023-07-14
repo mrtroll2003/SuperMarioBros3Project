@@ -17,6 +17,7 @@
 #define ID_ANI_PLAIN_BLACK 61300
 #define ID_ANI_BBB 61400
 #define ID_ANI_SBB 61500
+#define ID_ANI_MAIN 61600
 class CEnvironment: public CGameObject
 {
 public:
@@ -115,5 +116,11 @@ class CSmallBlackBush : public CEnvironment
 {
 public:
 	CSmallBlackBush(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CMainScreen : public CEnvironment
+{
+public:
+	CMainScreen(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };

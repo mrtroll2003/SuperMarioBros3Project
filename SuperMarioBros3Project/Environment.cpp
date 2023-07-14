@@ -59,3 +59,23 @@ void CSkyPlat::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_SKY_PLAT)->Render(x, y);
 }
+void CSpikeBlackBG::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_SPIKE_BLACK)->Render(x, y);
+}
+void CPlainBlackBG::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_PLAIN_BLACK)->Render(x, y);
+}
+void CBigBlackBush::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_BBB)->Render(x, y);
+}
+void CSmallBlackBush::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_SBB)->Render(x, y);
+}

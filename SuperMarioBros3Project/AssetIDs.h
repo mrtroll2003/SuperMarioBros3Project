@@ -11,6 +11,7 @@
 #define ID_TEX_ENEMY_2_FLIP (ID_TEX_ENEMY + 3)
 #define ID_TEX_MISC 20
 #define ID_TEX_ENVI 30	
+#define ID_TEX_MAP 40
 
 #pragma region MARIO 
 

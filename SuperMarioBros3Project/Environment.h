@@ -13,6 +13,10 @@
 #define ID_ANI_TRIP_PLAT 60800
 #define ID_ANI_HIGH_PLAT 60900
 #define ID_ANI_SKY_PLAT 61100
+#define ID_ANI_SPIKE_BLACK 61200
+#define ID_ANI_PLAIN_BLACK 61300
+#define ID_ANI_BBB 61400
+#define ID_ANI_SBB 61500
 class CEnvironment: public CGameObject
 {
 public:
@@ -87,5 +91,29 @@ class CSkyPlat : public CEnvironment
 {
 public:
 	CSkyPlat(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CSpikeBlackBG : public CEnvironment
+{
+public:
+	CSpikeBlackBG(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CPlainBlackBG : public CEnvironment
+{
+public:
+	CPlainBlackBG(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CBigBlackBush : public CEnvironment
+{
+public:
+	CBigBlackBush(float x, float y) : CEnvironment(x, y) {}
+	void Render();
+};
+class CSmallBlackBush : public CEnvironment
+{
+public:
+	CSmallBlackBush(float x, float y) : CEnvironment(x, y) {}
 	void Render();
 };

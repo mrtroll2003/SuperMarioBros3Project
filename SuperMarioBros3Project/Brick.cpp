@@ -41,7 +41,7 @@ void CInviBrick::Render()
 }
 int CInviBrick::IsDirectionColliable(float nx, float ny)
 {
-	if ((nx == 0 && ny == -1) || (nx == 1 && ny == 0))return 1;
+	if ((nx == 0 && ny == -1) || (nx == 1 && ny == 0) || (nx == -1 && ny == 0))return 1;
 	else return 0;
 }
 int CInviBase::IsDirectionColliable(float nx, float ny)

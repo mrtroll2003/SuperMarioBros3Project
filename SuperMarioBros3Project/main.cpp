@@ -63,6 +63,7 @@
 #define TEXTURE_PATH_ENEMY_2 TEXTURES_DIR "\\enemies2_transparent.png"
 #define TEXTURE_PATH_ENEMY_2_FLIP TEXTURES_DIR "\\enemies2_transparent_flipped.png"
 #define TEXTURE_PATH_ENVIRONMENT TEXTURES_DIR "\\environment_transparent.png"
+#define TEXTURE_PATH_MAP TEXTURES_DIR "\\map_layout_transparent.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
 CGame *game;
@@ -95,6 +96,7 @@ void LoadAssetsEnvironment()
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texEnvi = textures->Get(ID_TEX_ENVI);
+	LPTEXTURE texMap = textures->Get(ID_TEX_MAP);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 1, 1, 78, 1 + 131, 78 + 67, texEnvi);
 
@@ -117,6 +119,14 @@ void LoadAssetsEnvironment()
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 10, 558, 19, 655, 148, texEnvi);
 
 	sprites->Add(ID_SPRITE_ENVIRONMENT + 11, 126, 306, 213, 345, texEnvi);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 12, 2480, 0, 2575, 400, texMap);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 13, 2488, 0, 2575, 400, texMap);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 14, 2576, 319, 2656, 416, texMap);
+
+	sprites->Add(ID_SPRITE_ENVIRONMENT + 15, 2752, 367, 2800, 416, texMap);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -162,6 +172,22 @@ void LoadAssetsEnvironment()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_ENVIRONMENT + 11);
 	animations->Add(ID_ANI_SKY_PLAT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 12);
+	animations->Add(ID_ANI_SPIKE_BLACK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 13);
+	animations->Add(ID_ANI_PLAIN_BLACK, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 14);
+	animations->Add(ID_ANI_BBB, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_ENVIRONMENT + 15);
+	animations->Add(ID_ANI_SBB, ani);
 }
 void LoadAssetsMario()
 {
@@ -928,6 +954,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY_2_FLIP, TEXTURE_PATH_ENEMY_2_FLIP);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_ENVI, TEXTURE_PATH_ENVIRONMENT);
+	textures->Add(ID_TEX_MAP, TEXTURE_PATH_MAP);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 
 	LoadAssetsEnvironment();
@@ -950,7 +977,7 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 1420.0f
+#define MARIO_START_X 2420.0f
 #define MARIO_START_Y 10.0f
 
 #define BRICK_X 0.0f
@@ -1230,6 +1257,18 @@ void Reload()
 	CHighBush* hb = new CHighBush(2475.0f, BRICK_Y - 60.0f);
 	objects.push_back(hb);
 
+	CSpikeBlackBG* fn = new CSpikeBlackBG(2580.0f, BRICK_Y - 60.0f);
+	objects.push_front(fn);
+	for (int i = 0; i < 145; i++)
+	{
+		CPlainBlackBG* bg = new CPlainBlackBG(2655.0f + 87.0f * i, BRICK_Y - 60.0f);
+		objects.push_back(bg);
+	}
+	CBigBlackBush* bbb = new CBigBlackBush(2685.0f, BRICK_Y - 44.0f);
+	objects.push_back(bbb);
+	CSmallBlackBush* sbb = new CSmallBlackBush(2835.0f, BRICK_Y - 23.0f);
+	objects.push_back(sbb);
+
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
@@ -1268,7 +1307,11 @@ void Reload()
 		CInviBrick* b = new CInviBrick(0, BRICK_Y - i * BRICK_WIDTH);
 		objects.push_back(b);
 	}
-
+	for (int i = 0; i < 10; i++)
+	{
+		CInviBrick* b = new CInviBrick(2825.0f, BRICK_Y - i * BRICK_WIDTH);
+		objects.push_back(b);
+	}
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 

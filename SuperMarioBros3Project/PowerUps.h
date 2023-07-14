@@ -22,6 +22,9 @@
 #define COIN_STATE_RISING 100
 #define COIN_STATE_FALLING 200
 
+#define PORTAL_INPUT_SIT 100
+#define PORTAL_INPUT_JUMP 200
+
 #define ID_ANI_POWER_UPS 13000
 
 #define ID_ANI_SHROOM (ID_ANI_POWER_UPS+100)
@@ -33,6 +36,7 @@
 #define ID_ANI_POPUP_COIN (ID_ANI_POWER_UPS+200)
 
 #define ID_ANI_TANOOKI_LEAF (ID_ANI_POWER_UPS + 300)
+#define ID_ANI_PORTAL (ID_ANI_POWER_UPS + 400)
 class CPowerUps : public CGameObject
 {
 protected:
@@ -87,4 +91,19 @@ protected:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	CTanookiLeaf(float x, float y);
+};
+class CPortal : public CPowerUps
+{
+protected:
+	float teleX;
+	float teleY;
+	int input;
+	void Render();
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void Update(DWORD dt) {}
+public:
+	CPortal(float x, float y, float xx, float yy, int ip);
+	float GetDesX() { return teleX; }
+	float GetDesY() { return teleY; }
+	int GetInput() { return input; }
 };

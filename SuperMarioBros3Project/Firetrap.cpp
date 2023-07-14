@@ -75,28 +75,28 @@ void CFiretrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			switch (state)
 			{
 			case FIRETRAP_STATE_AIMING_DOWN_LEFT:
-				if (disY < -32)
+				if (abs(disY) < 32)
 					fire = new CFireball(GetX() , GetY() - 8, FIREBALL_STATE_LEFT3);
 				else 
 					fire = new CFireball(GetX() , GetY() - 8, FIREBALL_STATE_LEFT4);
 				break;
 			case FIRETRAP_STATE_AIMING_UP_LEFT:
-				if (disY < 32)
-					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
-				else
+				if (abs(disY) < 32)
 					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT2);
+				else
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
 				break;
 			case FIRETRAP_STATE_AIMING_UP_RIGHT:
-				if (disY < 32)
-					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
+				if (abs(disY) < 32)
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_RIGHT2);
 				else
-					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_RIGHT1);
 				break;
 			case FIRETRAP_STATE_AIMING_DOWN_RIGHT:
-				if (disY < -32)
-					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
+				if (abs(disY) < 32)
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_RIGHT3);
 				else
-					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_LEFT1);
+					fire = new CFireball(GetX(), GetY() - 8, FIREBALL_STATE_RIGHT4);
 				break;
 			}
 			objects.push_back(fire);

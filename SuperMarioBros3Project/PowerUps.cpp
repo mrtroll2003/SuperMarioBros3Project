@@ -169,3 +169,22 @@ void CTanookiLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
+CPortal::CPortal(float x, float y, float xx, float yy, int ip) : CPowerUps(x, y)
+{
+	this->teleX = xx;
+	this->teleY = yy;
+	this->input = ip;
+}
+void CPortal::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_PORTAL)->Render(x, y);
+	RenderBoundingBox();
+}
+void CPortal::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - 32 / 2;
+	top = y - 3 / 2;
+	right = left + 32;
+	bottom = top + 3;
+}

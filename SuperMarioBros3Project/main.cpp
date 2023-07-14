@@ -688,11 +688,11 @@ void LoadAssetsBrick()
 
 	sprites->Add(ID_SPRITE_CLOUD_BRICK + 1, 354, 243, 369, 258, texMisc);
 
-	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
+	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 283, 244, 283 + 15, 244 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_PIPE + 1, 4, 27, 37, 76, texEnvi);
 	//for debugging
-	sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
+	//sprites->Add(ID_SPRITE_INVI_BRICK + 1, 300, 135, 300 + 15, 135 + 15, texMisc);
 
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 1, 300, 117, 300 + 15, 117 + 15, texMisc);
 	sprites->Add(ID_SPRITE_QUESTION_BRICK + 2, 318, 117, 318 + 15, 117 + 15, texMisc);
@@ -800,6 +800,7 @@ void LoadAssetsCoin()
 
 	sprites->Add(ID_SPRITE_TANOOKI_LEAF + 1, 300, 208, 300 + LEAF_BBOX_WIDTH, 208 + LEAF_BBOX_HEIGHT, texMisc);
 
+	sprites->Add(ID_SPRITE_PORTAL + 1, 453, 753, 453 + 32, 753 + 3, texEnvi);
 	LPANIMATION ani = new CAnimation(300);
 	ani->Add(ID_SPRITE_COIN + 1);
 	ani->Add(ID_SPRITE_COIN + 2);
@@ -841,6 +842,10 @@ void LoadAssetsCoin()
 	ani = new CAnimation(300);
 	ani->Add(ID_SPRITE_TANOOKI_LEAF + 1);
 	animations->Add(ID_ANI_TANOOKI_LEAF, ani);
+
+	ani = new CAnimation(300);
+	ani->Add(ID_SPRITE_PORTAL + 1);
+	animations->Add(ID_ANI_PORTAL, ani);
 }
 
 void LoadAssetsFiretrap()
@@ -1000,7 +1005,7 @@ void ClearScene()
 	objects.clear();
 }
 
-#define MARIO_START_X 6000.0f
+#define MARIO_START_X 6000.0f //6000
 #define MARIO_START_Y 132.0f
 
 #define BRICK_X 0.0f
@@ -1263,6 +1268,8 @@ void Reload()
 		CPipe* flappy = new CPipe(2337.0f, BRICK_Y - 6.0f - 16.0f - 97.0f - 48.0f * i);
 		objects.push_back(flappy);
 	}
+	CPortal* pt1 = new CPortal(2337.0f, BRICK_Y - 112.0f - 96.0f - 40.0f, 3134.0f, BRICK_Y - 96.0f - 48.0f, PORTAL_INPUT_SIT);
+	objects.push_back(pt1);
 	for (int i = 0; i < 2; i++)
 	{
 		CStripeBrick* flappy = new CStripeBrick(2330.0f + i * BRICK_WIDTH, BRICK_Y - 38.0f);
@@ -1421,6 +1428,8 @@ void Reload()
 	objects.push_back(bp1);
 	CBlackPipe* bp2 = new CBlackPipe(3000.0f + 21 * 16.0f + 24.0f, BRICK_Y - 16.0f * 11 + 9.0f);
 	objects.push_back(bp2);
+	CPortal* pt2 = new CPortal(3000.0f + 21 * 16.0f + 24.0f, BRICK_Y - 16.0f * 11 + 27.0f, 2337.0f + 56.0f, BRICK_Y - 54.0f, PORTAL_INPUT_JUMP);
+	objects.push_back(pt2);
 
 	//Main Screen
 	CInviBrick* cam = new CInviBrick(6000.0f, BRICK_Y);
@@ -1481,8 +1490,27 @@ void Reload()
 	objects.push_back(qb5);
 	CQuestionBrick* qb6 = new CQuestionBrick(1530.0f, BRICK_Y - 38.0f);
 	objects.push_back(qb6);
-	CParaKoopa* para1 = new CParaKoopa(152.5f, 50.0f);
-	objects.push_back(para1);
+	CGoomba* gb1 = new CGoomba(152.5f, 50.0f);
+	objects.push_back(gb1);
+	CGoomba* gb2 = new CGoomba(535.0f - 78.0f, 50.0f);
+	objects.push_back(gb2);
+	CKoopa* kb1 = new CKoopa(584.0f - 78.0f, 25.0f);
+	objects.push_back(kb1);
+	CGoomba* gb3 = new CGoomba(843.0f - 78.0f, 25.0f);
+	objects.push_back(gb3);
+	CGoomba* gb4 = new CGoomba(887.0f - 78.0f, 25.0f);
+	objects.push_back(gb4);
+	CParaGoomba* pgb1 = new CParaGoomba(956.0f - 78.0f, 25.0f);
+	objects.push_back(pgb1);
+	for (int i = 0; i < 3; i++)
+	{
+		CParaKoopa* pkb = new CParaKoopa(1340.0f - 78.0f + 32.0f * i, BRICK_Y - 64.0f);
+		objects.push_back(pkb);
+	}
+	CKoopa* kb2 = new CKoopa(1483.0f - 78.0f, 50.0f);
+	objects.push_back(kb2);
+	CKoopa* kb3 = new CKoopa(2104.0f - 78.0f, 25.0f);
+	objects.push_back(kb3);
 	/*
 	CGoomba* goomba = new CGoomba(GOOMBA_X, GROUND_Y - 120.0f);
 	objects.push_back(goomba);

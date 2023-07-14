@@ -87,6 +87,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithParaGoomba(e);
 	else if (dynamic_cast<CParaKoopa*>(e->obj))
 		OnCollisionWithParaKoopa(e);
+	else if (dynamic_cast<CPortal*>(e->obj))
+		OnCollisionWithPortal(e);
 }
 
 void CMario::OnCollisionWithHostile(LPCOLLISIONEVENT e)
@@ -310,11 +312,17 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 		}
 		else if (qb->GetQuesID() == ID_ITEM_TANOOKI)
 		{
-			if(level >= MARIO_LEVEL_BIG)
-				tl = new CTanookiLeaf(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+			if (level >= MARIO_LEVEL_BIG)
+			{
+				tl = new CTanookiLeaf(qb->GetX() + 16, qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+				objects.push_back(tl);
+			}
 			else
+			{
 				mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
-			objects.push_back(bc);
+				objects.push_back(mr);
+			}
+				
 			qb->Delete();
 		}
 		
@@ -328,6 +336,12 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
 	SetLevel(MARIO_LEVEL_TANOOKI);
 	e->obj->Delete();
+}
+void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
+{
+	CPortal* pt = dynamic_cast<CPortal*>(e->obj);
+	if (((pt->GetInput() == PORTAL_INPUT_SIT) && (vy >= 0)) || ((pt->GetInput() == PORTAL_INPUT_JUMP) && (state == MARIO_STATE_JUMP)))
+		SetPosition(pt->GetDesX(), pt->GetDesY());
 }
 //
 // Get animation ID for small Mario

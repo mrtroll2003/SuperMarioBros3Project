@@ -3,7 +3,15 @@
 
 
 #include "Koopa.h"
+#include "Goomba.h"
 #include "Brick.h"
+#include "PowerUps.h"
+#include "Mario.h"
+extern CMushroom* mr;
+extern CBlockCoin* bc;
+extern CTanookiLeaf* tl;
+extern CMario* mario;
+extern list<LPGAMEOBJECT> objects;
 CKoopa::CKoopa(float x, float y) : CGameObject(x, y)
 {
 	this->ax = 0;
@@ -37,8 +45,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
 	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
-
 	if (e->ny != 0)
 	{
 		vy = 0;
@@ -46,6 +52,125 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+	}
+	if (dynamic_cast<CKoopa*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_WALKING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SPINNING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			{
+				goomba->SetState(GOOMBA_STATE_DIE);
+				DebugOut(L"A Goomba killed");
+			}
+		}
+	}
+	else if (dynamic_cast<CParaGoomba*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CParaGoomba* goomba = dynamic_cast<CParaGoomba*>(e->obj);
+			switch (goomba->GetState())
+			{
+			case GOOMBA_STATE_WALKING:
+				goomba->SetState(GOOMBA_STATE_DIE);
+				break;
+			case GOOMBA_STATE_PARA_WALKING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			case GOOMBA_STATE_PARA_SHORT_JUMPING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			case GOOMBA_STATE_PARA_JUMPING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CParaKoopa*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_PARA:
+				koopa->SetState(KOOPA_STATE_WALKING);
+				break;
+			case KOOPA_STATE_WALKING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SPINNING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CGoldBrick*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+			e->obj->Delete();
+	}
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+	{
+		CQuestionBrick* qb = dynamic_cast<CQuestionBrick*>(e->obj);
+		if (state == KOOPA_STATE_SPINNING)
+			if (qb->GetQuesID() == ID_ITEM_MUSHROOM)
+			{
+				mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+				objects.push_back(mr);
+				qb->Delete();
+			}
+			else if (qb->GetQuesID() == ID_ITEM_COIN)
+			{
+				bc = new CBlockCoin(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+				objects.push_back(bc);
+				mario->AddCoin();
+				qb->Delete();
+			}
+			else if (qb->GetQuesID() == ID_ITEM_TANOOKI)
+			{
+				if (mario->GetLevel() >= MARIO_LEVEL_BIG)
+				{
+					tl = new CTanookiLeaf(qb->GetX() + 16, qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+					objects.push_back(tl);
+				}
+				else
+				{
+					mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+					objects.push_back(mr);
+				}
+
+				qb->Delete();
+			}
 	}
 }
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -191,7 +316,6 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	isOnPlatform = false;
 	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
 	if (e->ny != 0)
 	{
 		vy = 0;
@@ -200,6 +324,125 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+	}
+	if (dynamic_cast<CKoopa*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_WALKING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SPINNING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			{
+				goomba->SetState(GOOMBA_STATE_DIE);
+				DebugOut(L"A Goomba killed");
+			}
+		}
+	}
+	else if (dynamic_cast<CParaGoomba*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CParaGoomba* goomba = dynamic_cast<CParaGoomba*>(e->obj);
+			switch (goomba->GetState())
+			{
+			case GOOMBA_STATE_WALKING:
+				goomba->SetState(GOOMBA_STATE_DIE);
+				break;
+			case GOOMBA_STATE_PARA_WALKING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			case GOOMBA_STATE_PARA_SHORT_JUMPING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			case GOOMBA_STATE_PARA_JUMPING:
+				goomba->SetState(GOOMBA_STATE_WALKING);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CParaKoopa*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+		{
+			CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
+			switch (koopa->GetState())
+			{
+			case KOOPA_STATE_PARA:
+				koopa->SetState(KOOPA_STATE_WALKING);
+				break;
+			case KOOPA_STATE_WALKING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			case KOOPA_STATE_SHELL:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SHAKING:
+				koopa->SetState(KOOPA_STATE_SPINNING);
+				break;
+			case KOOPA_STATE_SPINNING:
+				koopa->SetState(KOOPA_STATE_SHELL);
+				break;
+			}
+		}
+	}
+	else if (dynamic_cast<CGoldBrick*>(e->obj))
+	{
+		if (state == KOOPA_STATE_SPINNING)
+			e->obj->Delete();
+	}
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+	{
+		CQuestionBrick* qb = dynamic_cast<CQuestionBrick*>(e->obj);
+		if (state == KOOPA_STATE_SPINNING)
+			if (qb->GetQuesID() == ID_ITEM_MUSHROOM)
+			{
+				mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+				objects.push_back(mr);
+				qb->Delete();
+			}
+			else if (qb->GetQuesID() == ID_ITEM_COIN)
+			{
+				bc = new CBlockCoin(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+				objects.push_back(bc);
+				mario->AddCoin();
+				qb->Delete();
+			}
+			else if (qb->GetQuesID() == ID_ITEM_TANOOKI)
+			{
+				if (mario->GetLevel() >= MARIO_LEVEL_BIG)
+				{
+					tl = new CTanookiLeaf(qb->GetX() + 16, qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+					objects.push_back(tl);
+				}
+				else
+				{
+					mr = new CMushroom(qb->GetX(), qb->GetY() - BRICK_BBOX_HEIGHT / 2 - SHROOM_BBOX_HEIGHT / 2 - 1.5f);
+					objects.push_back(mr);
+				}
+
+				qb->Delete();
+			}
 	}
 }
 void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

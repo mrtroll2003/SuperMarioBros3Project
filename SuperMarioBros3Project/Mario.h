@@ -211,6 +211,7 @@ public:
 	float GetX() { return x; }
 	float GetY() { return y; }
 	int GetLevel() { return level; }
+	void AddCoin() { coin++; }
 
 	ULONGLONG GetRuntime() { return run_start; }
 	BOOLEAN onPlat() { return isOnPlatform; }
